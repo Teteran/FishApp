@@ -3,12 +3,11 @@ import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-na
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import MapboxGL from '@react-native-mapbox-gl/maps'
+import { Config } from 'App/Config'
 import Style from './MapScreenStyle'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
 
-MapboxGL.setAccessToken(
-  'pk.eyJ1Ijoia2FjcGVyNjY3IiwiYSI6ImNqbzBjejllYzBrM2Ezam1idXoxY28zcmgifQ.vvA5jjbYHZHcruU5BlmmGA'
-)
+MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN)
 
 class HomeScreen extends React.Component {
   render() {
