@@ -1,3 +1,11 @@
 {
   "appName": "FishApp",
+  "navigation": {
+    "map": "Mapa",
+    "home": "Home",
+    "catches": "Połowy"
+  },
+  "home": {
+    "welcome": "Welcome to %{appName}!"
+  }
 }

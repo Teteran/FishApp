@@ -1,0 +1,50 @@
+import React from 'react'
+import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
+import { connect } from 'react-redux'
+import { PropTypes } from 'prop-types'
+import MapboxGL from '@react-native-mapbox-gl/maps'
+import Style from './MapScreenStyle'
+import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+
+MapboxGL.setAccessToken(
+  'pk.eyJ1Ijoia2FjcGVyNjY3IiwiYSI6ImNqbzBjejllYzBrM2Ezam1idXoxY28zcmgifQ.vvA5jjbYHZHcruU5BlmmGA'
+)
+
+class HomeScreen extends React.Component {
+  render() {
+    MapboxGL.requestAndroidLocationPermissions()
+    return (
+      <View style={[Helpers.fill]}>
+        <MapboxGL.MapView
+          styleURL={MapboxGL.StyleURL.SatelliteStreet}
+          attributionEnabled={false}
+          compassEnabled={true}
+          compassViewPosition={1}
+          surfaceView={true}
+          zoomLevel={12}
+          style={[Helpers.fill]}
+        >
+          <MapboxGL.Camera
+            followUserLocation={true}
+            followUserMode="gps"
+            defaultSettings={{
+              zoomLevel: 16,
+            }}
+          />
+          <MapboxGL.UserLocation visible={true} androidRenderMode={'gps'} />
+        </MapboxGL.MapView>
+      </View>
+    )
+  }
+}
+
+HomeScreen.propTypes = {}
+
+const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps = (dispatch) => ({})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen)
