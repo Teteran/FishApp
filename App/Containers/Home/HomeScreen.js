@@ -2,16 +2,20 @@ import React from 'react'
 import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
+import Geolocation from '@react-native-community/geolocation'
 import Style from './HomeScreenStyle'
 import WeatherActions from 'App/Stores/Weather/Actions'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
 
 class HomeScreen extends React.Component {
   componentDidMount() {
-    this.props.fetchWeatherData()
+    Geolocation.getCurrentPosition((info) => {
+      const { latitude, longitude } = info.coords
+      this.props.fetchWeatherData(latitude, longitude)
+    })
   }
+
   render() {
-    console.log(this)
     return (
       <View
         style={[
@@ -31,10 +35,20 @@ class HomeScreen extends React.Component {
 
 HomeScreen.propTypes = {}
 
-const mapStateToProps = (state) => ({ xxx: state })
+const extractWeatherConditions = (obj) => {
+  if (obj) {
+    return { weatherIcon: obj?.weather[0]?.icon, main: obj?.main, wind: obj?.wind }
+  }
+  return null
+}
+
+const mapStateToProps = (state) => ({
+  stationName: state.weatherData.weatherData.name,
+  weatherConditions: extractWeatherConditions(state.weatherData.weatherData),
+})
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchWeatherData: () => dispatch(WeatherActions.fetchWeatherData()),
+  fetchWeatherData: (lat, lon) => dispatch(WeatherActions.fetchWeatherData(lat, lon)),
 })
 
 export default connect(

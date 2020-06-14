@@ -19,7 +19,7 @@ import { createActions } from 'reduxsauce'
  * @see https://github.com/infinitered/reduxsauce#createactions
  */
 const { Types, Creators } = createActions({
-  fetchWeatherData: null,
+  fetchWeatherData: ['lat', 'lon'],
   fetchWeatherDataLoading: null,
   fetchWeatherDataSuccess: ['weatherData'],
   fetchWeatherDataFailure: ['errorMessage'],

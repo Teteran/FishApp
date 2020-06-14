@@ -2,15 +2,14 @@ import { put, call } from 'redux-saga/effects'
 import WeatherActions from 'App/Stores/Weather/Actions'
 import { weatherApiService } from 'App/Services/WeatherApiService'
 
-export function* fetchWeatherData() {
+export function* fetchWeatherData(action) {
   yield put(WeatherActions.fetchWeatherDataLoading())
 
-  const weatherData = yield call(weatherApiService.fetchWeatherData)
-  if (weatherData) {
-    yield put(WeatherActions.fetchWeatherDataSuccess(weatherData))
+  const { response, error } = yield call(weatherApiService.fetchWeatherData, action.lat, action.lon)
+
+  if (response) {
+    yield put(WeatherActions.fetchWeatherDataSuccess(response.data))
   } else {
-    yield put(
-      WeatherActions.fetchWeatherDataFailure('There was an error while fetching weather data.')
-    )
+    yield put(WeatherActions.fetchWeatherDataFailure(error))
   }
 }
