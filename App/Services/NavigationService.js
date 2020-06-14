@@ -1,7 +1,7 @@
-import * as React from 'react';
-import {CommonActions, StackActions} from '@react-navigation/native';
+import * as React from 'react'
+import { CommonActions, StackActions } from '@react-navigation/native'
 
-const navigationRef = React.createRef();
+const navigationRef = React.createRef()
 
 /**
  * Call this function when you want to navigate to a specific route.
@@ -10,7 +10,7 @@ const navigationRef = React.createRef();
  * @param params Route parameters.
  */
 export function navigate(name, params) {
-  navigationRef.current?.navigate(name, params);
+  navigationRef.current?.navigate(name, params)
 }
 
 /**
@@ -23,7 +23,6 @@ export function navigate(name, params) {
  * @param params Route parameters.
  */
 function navigateAndReset(routeName, params) {
-  debugger;
   navigationRef.current?.reset({
     index: 0,
     key: null,
@@ -33,11 +32,11 @@ function navigateAndReset(routeName, params) {
         params,
       }),
     ],
-  });
+  })
 }
 
 export default {
   navigationRef,
   navigate,
   navigateAndReset,
-};
+}

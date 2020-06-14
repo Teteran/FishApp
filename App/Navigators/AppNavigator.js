@@ -21,7 +21,7 @@ function AppNavigationContainer() {
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator initialRouteName="HomeScreen">
         <Tab.Screen
-          name="map"
+          name="MapScreen"
           component={MapScreen}
           options={{
             title: i18n.t('navigation.map'),
@@ -31,7 +31,7 @@ function AppNavigationContainer() {
           }}
         />
         <Tab.Screen
-          name="home"
+          name="HomeScreen"
           component={HomeScreen}
           options={{
             title: i18n.t('navigation.home'),
@@ -41,7 +41,7 @@ function AppNavigationContainer() {
           }}
         />
         <Tab.Screen
-          name="catches"
+          name="CatchesScreen"
           component={HomeScreen}
           options={{
             title: i18n.t('navigation.catches'),

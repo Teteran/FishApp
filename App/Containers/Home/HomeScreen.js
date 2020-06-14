@@ -3,10 +3,15 @@ import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-na
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import Style from './HomeScreenStyle'
+import WeatherActions from 'App/Stores/Weather/Actions'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
 
 class HomeScreen extends React.Component {
+  componentDidMount() {
+    this.props.fetchWeatherData()
+  }
   render() {
+    console.log(this)
     return (
       <View
         style={[
@@ -26,9 +31,11 @@ class HomeScreen extends React.Component {
 
 HomeScreen.propTypes = {}
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({ xxx: state })
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  fetchWeatherData: () => dispatch(WeatherActions.fetchWeatherData()),
+})
 
 export default connect(
   mapStateToProps,

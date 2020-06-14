@@ -25,9 +25,9 @@ class HomeScreen extends React.Component {
         >
           <MapboxGL.Camera
             followUserLocation={true}
-            followUserMode="gps"
+            followUserMode="course"
             defaultSettings={{
-              zoomLevel: 16,
+              zoomLevel: 17,
             }}
           />
           <MapboxGL.UserLocation visible={true} androidRenderMode={'gps'} />

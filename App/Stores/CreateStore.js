@@ -2,6 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { persistReducer, persistStore } from 'redux-persist'
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 /**
  * This import defaults to localStorage for web and AsyncStorage for react-native.
  *
@@ -25,7 +26,7 @@ const persistConfig = {
 }
 
 export default (rootReducer, rootSaga) => {
-  const middleware = [logger]
+  const middleware = [logger, thunk]
   const enhancers = []
 
   // Connect the sagas to the redux store
