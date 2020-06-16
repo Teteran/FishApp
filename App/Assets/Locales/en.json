@@ -7,6 +7,6 @@
   },
   "home": {
     "welcome": "Welcome to %{appName}!",
-    "station": "Station:  %{stationName}"
+    "station": "Station: %{stationName}"
   }
 }
