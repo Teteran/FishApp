@@ -4,6 +4,8 @@ import { weatherApiClient } from 'App/Clients/WeatherApiClient'
 
 const params = {
   appid: Config.WEATHER_API_KEY,
+  lang: 'pl',
+  units: 'metric',
 }
 
 function fetchWeatherData(lat, lon) {

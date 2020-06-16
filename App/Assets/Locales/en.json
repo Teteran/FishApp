@@ -6,6 +6,7 @@
     "catches": "Catches"
   },
   "home": {
-    "welcome": "Welcome to %{appName}!"
+    "welcome": "Welcome to %{appName}!",
+    "station": "Station:  %{stationName}"
   }
 }

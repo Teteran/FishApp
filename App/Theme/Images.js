@@ -4,4 +4,5 @@
 
 export default {
   logo: require('App/Assets/Images/TOM.png'),
+  homeBackground: require('App/Assets/Images/HomeScreenBackground.jpg'),
 }

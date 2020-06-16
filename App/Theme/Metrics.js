@@ -1,3 +1,7 @@
+import { Dimensions } from 'react-native'
+
+const deviceWidth = Dimensions.get('window').width
+const deviceHeight = Dimensions.get('window').deviceHeight
 /**
  * This file contains metric values that are global to the application.
  */
@@ -9,6 +13,8 @@ export const normal = tiny * 3 // 15
 export const medium = normal * 2 // 30
 
 export default {
+  deviceWidth,
+  deviceHeight,
   bottomMargin: {
     marginBottom: normal,
   },

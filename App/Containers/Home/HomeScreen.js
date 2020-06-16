@@ -1,11 +1,15 @@
-import React from 'react'
-import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
-import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
+import { ActivityIndicator, Button, Image, ImageBackground, Platform, View } from 'react-native'
+import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
+
 import Geolocation from '@react-native-community/geolocation'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { PropTypes } from 'prop-types'
+import React from 'react'
 import Style from './HomeScreenStyle'
+import { Text } from 'App/Components'
+import i18n from 'App/Services/i18n'
 import WeatherActions from 'App/Stores/Weather/Actions'
-import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+import { connect } from 'react-redux'
 
 class HomeScreen extends React.Component {
   componentDidMount() {
@@ -16,28 +20,76 @@ class HomeScreen extends React.Component {
   }
 
   render() {
+    const { weatherConditions } = this.props
     return (
-      <View
-        style={[
-          Helpers.fill,
-          Helpers.rowMain,
-          Metrics.mediumHorizontalMargin,
-          Metrics.mediumVerticalMargin,
-        ]}
-      >
-        <View style={Style.logoContainer}>
-          <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
+      <ImageBackground source={Images.homeBackground} style={[Helpers.fill, Helpers.center]}>
+        <View style={Style.weatherContainer}>
+          {this.renderWeatherGeneralsContainer(weatherConditions)}
+          {this.renderWeatherDetailsContainer(weatherConditions)}
+        </View>
+      </ImageBackground>
+    )
+  }
+  renderWeatherGeneralsContainer = (weatherConditions) => {
+    return (
+      <View style={Style.weatherGeneralsContainer}>
+        <Text style={Fonts.h1}>{Math.floor(weatherConditions.main.feels_like)} °C</Text>
+        <Text style={Fonts.normal}>
+          {i18n.t('home.station', { stationName: weatherConditions?.stationName })}
+        </Text>
+      </View>
+    )
+  }
+
+  renderWeatherDetailsContainer = (weatherConditions) => {
+    return (
+      <View style={Style.weatherDetailsContainer}>
+        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween, Style.detailDivider]}>
+          <MaterialCommunityIcons
+            name="gauge"
+            color={Colors.red}
+            size={26}
+            style={Metrics.tinyHorizontalPadding}
+          />
+          <Text>{weatherConditions?.main?.pressure} hPa</Text>
+        </View>
+        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween, Style.detailDivider]}>
+          <MaterialCommunityIcons
+            name="arrow-up-thick"
+            color={Colors.brightBlue}
+            size={26}
+            style={[
+              Metrics.tinyHorizontalPadding,
+              { transform: [{ rotate: `${weatherConditions?.wind?.deg}deg` }] },
+            ]}
+          />
+          <Text>{Math.floor(weatherConditions.wind.speed)} km/h</Text>
+        </View>
+        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween, Style.detailDivider]}>
+          <MaterialCommunityIcons
+            name="water-percent"
+            color={Colors.green}
+            size={26}
+            style={Metrics.tinyHorizontalPadding}
+          />
+          <Text>{weatherConditions?.main?.humidity}%</Text>
         </View>
       </View>
     )
   }
 }
-
 HomeScreen.propTypes = {}
 
 const extractWeatherConditions = (obj) => {
   if (obj) {
-    return { weatherIcon: obj?.weather[0]?.icon, main: obj?.main, wind: obj?.wind }
+    return {
+      weatherIcon: obj?.weather[0]?.icon,
+      main: obj?.main,
+      wind: obj?.wind,
+      sunrise: obj?.sys?.sunrise,
+      sunset: obj?.sys?.sunset,
+      stationName: obj?.name,
+    }
   }
   return null
 }

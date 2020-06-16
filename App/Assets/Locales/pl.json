@@ -6,6 +6,7 @@
     "catches": "Połowy"
   },
   "home": {
-    "welcome": "Welcome to %{appName}!"
+    "welcome": "Welcome to %{appName}!",
+    "station": "Stacja: %{stationName}"
   }
 }

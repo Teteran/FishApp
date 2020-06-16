@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { Colors } from 'App/Theme'
 
 const size = {
   h1: 38,
@@ -22,5 +23,6 @@ export default StyleSheet.create({
   },
   normal: {
     fontSize: size.regular,
+    color: Colors.white,
   },
 })
