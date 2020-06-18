@@ -1,3 +1,4 @@
 import Text from './Text'
+import GradientBackground from './GradientBackground'
 
-export { Text }
+export { Text, GradientBackground }

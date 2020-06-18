@@ -24,13 +24,20 @@ class HomeScreen extends React.Component {
           style={[Helpers.fill]}
         >
           <MapboxGL.Camera
+            ref={(ref) => (this.camera = ref)}
             followUserLocation={true}
-            followUserMode="course"
+            followUserMode="normal"
             defaultSettings={{
               zoomLevel: 17,
             }}
           />
-          <MapboxGL.UserLocation visible={true} androidRenderMode={'gps'} />
+          <MapboxGL.UserLocation
+            ref={(ref) => (this.userLocation = ref)}
+            visible={true}
+            androidRenderMode={'gps'}
+            showsUserHeadingIndicator={true}
+            animationMode={'flyTo'}
+          />
         </MapboxGL.MapView>
       </View>
     )

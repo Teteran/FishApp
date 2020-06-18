@@ -6,10 +6,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { PropTypes } from 'prop-types'
 import React from 'react'
 import Style from './HomeScreenStyle'
-import { Text } from 'App/Components'
+import { Text, GradientBackground } from 'App/Components'
 import i18n from 'App/Services/i18n'
 import WeatherActions from 'App/Stores/Weather/Actions'
 import { connect } from 'react-redux'
+import Weather from 'App/Assets/Images/11n.svg'
 
 class HomeScreen extends React.Component {
   componentDidMount() {
@@ -22,7 +23,7 @@ class HomeScreen extends React.Component {
   render() {
     const { weatherConditions } = this.props
     return (
-      <ImageBackground source={Images.homeBackground} style={[Helpers.fill, Helpers.center]}>
+      <ImageBackground source={Images.homeBackground} style={[Helpers.fillColCenter]}>
         <View style={Style.weatherContainer}>
           {this.renderWeatherGeneralsContainer(weatherConditions)}
           {this.renderWeatherDetailsContainer(weatherConditions)}
@@ -33,10 +34,43 @@ class HomeScreen extends React.Component {
   renderWeatherGeneralsContainer = (weatherConditions) => {
     return (
       <View style={Style.weatherGeneralsContainer}>
-        <Text style={Fonts.h1}>{Math.floor(weatherConditions.main.feels_like)} °C</Text>
-        <Text style={Fonts.normal}>
-          {i18n.t('home.station', { stationName: weatherConditions?.stationName })}
-        </Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <MaterialCommunityIcons
+            name="weather-partlycloudy"
+            color={Colors.yellow}
+            size={50}
+            style={[Metrics.tinyHorizontalPadding, { height: '50%' }]}
+          />
+          <View
+            style={{
+              height: '50%',
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+            }}
+          >
+            <Text style={[Fonts.h2, { lineHeight: 34, height: 34 }]}>
+              {Math.floor(weatherConditions.main.feels_like)}
+            </Text>
+            <Text style={[Fonts.normal, { height: 42 }]}>°C</Text>
+          </View>
+        </View>
+
+        <GradientBackground
+          colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.5)']}
+          style={{ width: '100%' }}
+        >
+          <Text style={Fonts.small}>
+            {i18n.t('home.station', { stationName: weatherConditions?.stationName })}
+          </Text>
+        </GradientBackground>
       </View>
     )
   }
@@ -44,35 +78,41 @@ class HomeScreen extends React.Component {
   renderWeatherDetailsContainer = (weatherConditions) => {
     return (
       <View style={Style.weatherDetailsContainer}>
-        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween, Style.detailDivider]}>
-          <MaterialCommunityIcons
-            name="gauge"
-            color={Colors.red}
-            size={26}
-            style={Metrics.tinyHorizontalPadding}
-          />
-          <Text>{weatherConditions?.main?.pressure} hPa</Text>
+        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween]}>
+          <GradientBackground>
+            <MaterialCommunityIcons
+              name="gauge"
+              color={Colors.red}
+              size={20}
+              style={Metrics.tinyHorizontalPadding}
+            />
+            <Text style={Fonts.medium}>{weatherConditions?.main?.pressure} hPa</Text>
+          </GradientBackground>
         </View>
-        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween, Style.detailDivider]}>
-          <MaterialCommunityIcons
-            name="arrow-up-thick"
-            color={Colors.brightBlue}
-            size={26}
-            style={[
-              Metrics.tinyHorizontalPadding,
-              { transform: [{ rotate: `${weatherConditions?.wind?.deg}deg` }] },
-            ]}
-          />
-          <Text>{Math.floor(weatherConditions.wind.speed)} km/h</Text>
+        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween]}>
+          <GradientBackground>
+            <MaterialCommunityIcons
+              name="navigation"
+              color={Colors.brightBlue}
+              size={20}
+              style={[
+                Metrics.tinyHorizontalPadding,
+                { transform: [{ rotate: `${weatherConditions?.wind?.deg}deg` }] },
+              ]}
+            />
+            <Text style={Fonts.medium}>{Math.floor(weatherConditions.wind.speed)} km/h</Text>
+          </GradientBackground>
         </View>
-        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween, Style.detailDivider]}>
-          <MaterialCommunityIcons
-            name="water-percent"
-            color={Colors.green}
-            size={26}
-            style={Metrics.tinyHorizontalPadding}
-          />
-          <Text>{weatherConditions?.main?.humidity}%</Text>
+        <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween]}>
+          <GradientBackground>
+            <MaterialCommunityIcons
+              name="water-percent"
+              color={Colors.green}
+              size={20}
+              style={Metrics.tinyHorizontalPadding}
+            />
+            <Text style={Fonts.medium}>{weatherConditions?.main?.humidity}%</Text>
+          </GradientBackground>
         </View>
       </View>
     )

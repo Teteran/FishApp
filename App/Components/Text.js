@@ -9,7 +9,7 @@ export default class Text extends React.Component {
   }
 }
 
-Text.propTypes = {}
+Text.propTypes = { style: PropTypes.object }
 
 const style = StyleSheet.create({
   defaultTextStyle: {

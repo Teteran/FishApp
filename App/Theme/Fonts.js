@@ -9,6 +9,7 @@ const size = {
   regular: 17,
   medium: 14,
   small: 12,
+  big: 46,
 }
 
 export default StyleSheet.create({
@@ -24,5 +25,14 @@ export default StyleSheet.create({
   normal: {
     fontSize: size.regular,
     color: Colors.white,
+  },
+  medium: {
+    fontSize: size.medium,
+  },
+  small: {
+    fontSize: size.small,
+  },
+  big: {
+    fontSize: size.big,
   },
 })
