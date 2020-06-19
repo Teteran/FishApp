@@ -8,6 +8,7 @@ export default class GradientBackground extends React.Component {
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
+        {...this.props}
         colors={this.props.colors}
         style={[Helpers.rowCenter, Metrics.horizontalPadding, this.props.style]}
       >
@@ -19,12 +20,20 @@ export default class GradientBackground extends React.Component {
 
 GradientBackground.defaultProps = {
   colors: [
+    'rgba(0,0,0,0)',
     'rgba(0,0,0,0.1)',
+    'rgba(0,0,0,0.3)',
     'rgba(0,0,0,0.5)',
     'rgba(0,0,0,0.5)',
     'rgba(0,0,0,0.5)',
+    'rgba(0,0,0,0.3)',
     'rgba(0,0,0,0.1)',
+    'rgba(0,0,0,0)',
   ],
   style: {},
 }
-GradientBackground.propTypes = { colors: PropTypes.Array, style: PropTypes.object }
+GradientBackground.propTypes = {
+  colors: PropTypes.array,
+  style: PropTypes.object,
+  props: PropTypes.object,
+}

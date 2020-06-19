@@ -34,43 +34,37 @@ class HomeScreen extends React.Component {
   renderWeatherGeneralsContainer = (weatherConditions) => {
     return (
       <View style={Style.weatherGeneralsContainer}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <View style={Helpers.fillRowCenter}>
           <MaterialCommunityIcons
             name="weather-partlycloudy"
             color={Colors.yellow}
-            size={50}
-            style={[Metrics.tinyHorizontalPadding, { height: '50%' }]}
+            size={64}
+            style={[Metrics.tinyHorizontalPadding]}
           />
           <View
             style={{
-              height: '50%',
               flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-end',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <Text style={[Fonts.h2, { lineHeight: 34, height: 34 }]}>
-              {Math.floor(weatherConditions.main.feels_like)}
-            </Text>
-            <Text style={[Fonts.normal, { height: 42 }]}>°C</Text>
+            <Text style={[Fonts.h1]}>{Math.floor(32)}</Text>
+            <Text style={[Fonts.normal, { height: 32 }]}>°C</Text>
           </View>
         </View>
-
-        <GradientBackground
-          colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.5)']}
-          style={{ width: '100%' }}
+        <Text
+          style={[
+            Fonts.small,
+            Metrics.horizontalPadding,
+            {
+              backgroundColor: Colors.transparentBlack,
+              borderTopRightRadius: 100,
+              borderTopLeftRadius: 100,
+            },
+          ]}
         >
-          <Text style={Fonts.small}>
-            {i18n.t('home.station', { stationName: weatherConditions?.stationName })}
-          </Text>
-        </GradientBackground>
+          {i18n.t('home.station', { stationName: weatherConditions?.stationName })}
+        </Text>
       </View>
     )
   }
@@ -100,7 +94,7 @@ class HomeScreen extends React.Component {
                 { transform: [{ rotate: `${weatherConditions?.wind?.deg}deg` }] },
               ]}
             />
-            <Text style={Fonts.medium}>{Math.floor(weatherConditions.wind.speed)} km/h</Text>
+            <Text style={Fonts.medium}>{Math.floor(weatherConditions?.wind?.speed)} km/h</Text>
           </GradientBackground>
         </View>
         <View style={[Helpers.fillRowCenter, Helpers.mainSpaceBetween]}>
@@ -123,7 +117,6 @@ HomeScreen.propTypes = {}
 const extractWeatherConditions = (obj) => {
   if (obj) {
     return {
-      weatherIcon: obj?.weather[0]?.icon,
       main: obj?.main,
       wind: obj?.wind,
       sunrise: obj?.sys?.sunrise,
