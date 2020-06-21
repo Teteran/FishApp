@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/lib/integration/react';
-import createStore from './App/Stores';
-import AppNavigator from './App/Navigators/AppNavigator';
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/lib/integration/react'
+import createStore from './App/Stores'
+import AppNavigator from './App/Navigators/AppNavigator'
+import { enableScreens } from 'react-native-screens'
+enableScreens()
 
-const {store, persistor} = createStore();
+const { store, persistor } = createStore()
 
 export default class App extends Component {
   render() {
@@ -24,6 +26,6 @@ export default class App extends Component {
           <AppNavigator />
         </PersistGate>
       </Provider>
-    );
+    )
   }
 }

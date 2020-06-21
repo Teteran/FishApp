@@ -2,55 +2,32 @@ import React from 'react'
 import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import HomeScreen from 'App/Containers/Home/HomeScreen'
 import MapScreen from 'App/Containers/Map/MapScreen'
+import CatchesFormScreen from 'App/Containers/Catches/CatchesFormScreen'
+import CatchesScreen from 'App/Containers/Catches/CatchesScreen'
+import MainTabNavigator from 'App/Navigators/MainTabNavigator'
 import { navigationRef } from 'App/Services/NavigationService'
 import i18n from 'App/Services/i18n'
 
-/**
- * The root screen contains the application's navigation.
- *
- * @see https://reactnavigation.org/docs/en/hello-react-navigation.html#creating-a-stack-navigator
- */
-const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
 
 function AppNavigationContainer() {
   return (
     // Initialize the NavigationService (see https://reactnavigation.org/docs/en/navigating-without-navigation-prop.html)
     <NavigationContainer ref={navigationRef}>
-      <Tab.Navigator initialRouteName="HomeScreen">
-        <Tab.Screen
-          name="MapScreen"
-          component={MapScreen}
+      <Stack.Navigator initialRouteName="MainTabNavigator" headerMode="screen">
+        <Stack.Screen
+          name="MainTabNavigator"
+          component={MainTabNavigator}
           options={{
-            title: i18n.t('navigation.map'),
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="mapbox" color={color} size={size} />
-            ),
+            headerShown: false,
           }}
         />
-        <Tab.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{
-            title: i18n.t('navigation.home'),
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="CatchesScreen"
-          component={HomeScreen}
-          options={{
-            title: i18n.t('navigation.catches'),
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="fish" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+        <Stack.Screen name="CatchesFormScreen" component={CatchesFormScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }
