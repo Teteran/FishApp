@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
+import { Helpers, Metrics, Fonts, Colors, ApplicationStyles } from 'App/Theme'
 
 export default StyleSheet.create({
   error: {
@@ -15,8 +15,8 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   weatherContainer: {
-    ...Helpers.center,
     ...Helpers.mainCenter,
+    ...ApplicationStyles.shadow,
     width: Math.round(Metrics.deviceWidth * (7 / 10)),
     height: Math.round(Metrics.deviceWidth * (7 / 10)),
     backgroundColor: Colors.transparentBlack,

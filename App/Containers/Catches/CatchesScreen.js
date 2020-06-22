@@ -1,15 +1,14 @@
 import {
   ActivityIndicator,
-  Button,
   Image,
   ImageBackground,
   Platform,
   View,
   TouchableOpacity,
   FlatList,
+  TouchableHighlight,
 } from 'react-native'
 import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
-
 import Geolocation from '@react-native-community/geolocation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { PropTypes } from 'prop-types'
@@ -46,9 +45,8 @@ const DATA = [
 
 class CatchesScreen extends React.Component {
   render() {
-    console.log(this.onPressListItem)
     return (
-      <View>
+      <View style={Style.container}>
         <FlatList
           data={DATA}
           numColumns={2}
@@ -57,12 +55,13 @@ class CatchesScreen extends React.Component {
           )}
           keyExtractor={(item) => item.id}
         />
-        <Button
+        <TouchableHighlight
+          underlayColor="#DDDDDD"
           onPress={this.onPressListItem}
-          title="Learn More"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
+          style={[ApplicationStyles.floatingButton, Style.addNewCatchFloatingButton]}
+        >
+          <Text style={Fonts.h1}>+</Text>
+        </TouchableHighlight>
       </View>
     )
   }

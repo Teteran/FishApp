@@ -14,4 +14,8 @@ export default StyleSheet.create({
   title: {
     fontSize: 32,
   },
+  addNewCatchFloatingButton: {
+    ...Helpers.center,
+    backgroundColor: Colors.success,
+  },
 })
