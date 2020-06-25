@@ -3,7 +3,7 @@
  *
  * Use it to define generic component styles (e.g. the default text styles, default button styles...).
  */
-import Colors from './Colors'
+import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
 
 export default {
   button: {
@@ -18,7 +18,7 @@ export default {
     shadowOpacity: 0.43,
     shadowRadius: 9.51,
 
-    elevation: 300,
+    elevation: 1,
   },
   floatingButton: {
     position: 'absolute',
@@ -28,5 +28,18 @@ export default {
     bottom: 20,
     borderRadius: 360,
     elevation: 5,
+  },
+  inputContainer: {
+    ...Helpers.fillRowCenter,
+    ...Metrics.tinyVerticalPadding,
+    borderWidth: 0.5,
+    borderColor: Colors.grey2,
+    borderRadius: 5,
+    minHeight: 45,
+  },
+  inputText: {
+    ...Fonts.normal,
+    textAlign: 'center',
+    color: Colors.text,
   },
 }

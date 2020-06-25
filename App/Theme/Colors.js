@@ -10,6 +10,8 @@ export default {
   transparentBlack: 'rgba(0,0,0,0.5)',
   // Example colors:
   white: '#ffffff',
+  grey: '#e5e5e5',
+  grey2: '#bdbdbd',
   yellow: '#ff00ff',
   text: '#212529',
   primary: '#007bff',

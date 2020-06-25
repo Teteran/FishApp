@@ -5,6 +5,17 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
+  mainFormContainer: {
+    ...Metrics.verticalMargin,
+    ...Metrics.horizontalMargin,
+    ...Metrics.verticalPadding,
+    ...Metrics.horizontalPadding,
+    flex: 1,
+    backgroundColor: Colors.white,
+    borderWidth: 0.5,
+    borderColor: Colors.grey,
+    ...ApplicationStyles.shadow,
+  },
   item: {
     backgroundColor: '#f9c2ff',
     padding: 20,
