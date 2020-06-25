@@ -95,6 +95,7 @@ class CatchesFormScreen extends React.Component {
               <View style={Style.container}>
                 <Text>Fish Dimension</Text>
                 <NumericInput
+                  inputIcon="ruler"
                   onChangeText={(value) => {
                     this.onInputChange({ id: 'fish_dimension', value })
                   }}
@@ -105,6 +106,7 @@ class CatchesFormScreen extends React.Component {
               <View style={Style.container}>
                 <Text>Waga</Text>
                 <NumericInput
+                  inputIcon="weight-kilogram"
                   onChangeText={(value) => {
                     this.onInputChange({ id: 'fish_weight', value })
                   }}

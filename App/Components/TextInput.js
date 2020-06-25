@@ -16,13 +16,15 @@ export default class TextInput extends React.Component {
   }
   render() {
     return (
-      <RNTextInput
-        {...this.props}
-        style={[ApplicationStyles.inputContainer, ApplicationStyles.inputText]}
-        onChangeText={(value) => this.setState({ value })}
-        blurOnSubmit
-        value={this.state.value}
-      />
+      <View style={ApplicationStyles.inputContainer}>
+        <RNTextInput
+          {...this.props}
+          style={ApplicationStyles.inputText}
+          onChangeText={(value) => this.setState({ value })}
+          blurOnSubmit
+          value={this.state.value}
+        />
+      </View>
     )
   }
 }

@@ -30,16 +30,23 @@ export default {
     elevation: 5,
   },
   inputContainer: {
-    ...Helpers.fillRowCenter,
+    ...Helpers.rowCenter,
     ...Metrics.tinyVerticalPadding,
     borderWidth: 0.5,
     borderColor: Colors.grey2,
     borderRadius: 5,
-    minHeight: 45,
   },
   inputText: {
+    flex: 3,
     ...Fonts.normal,
     textAlign: 'center',
     color: Colors.text,
+    padding: 0,
+    marginHorizontal: 5,
+  },
+  inputIcon: {
+    flex: 1,
+    ...Helpers.rowCenter,
+    textAlign: 'center',
   },
 }
