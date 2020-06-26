@@ -35,6 +35,7 @@ export default {
     borderWidth: 0.5,
     borderColor: Colors.grey2,
     borderRadius: 5,
+    marginBottom: 20,
   },
   inputText: {
     flex: 3,

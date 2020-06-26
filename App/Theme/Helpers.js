@@ -1,8 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native'
 import { Colors } from 'App/Theme'
 
-const deviceWidth = Dimensions.get('window').width
-
 export default StyleSheet.create({
   backgroundReset: {
     backgroundColor: Colors.transparent,

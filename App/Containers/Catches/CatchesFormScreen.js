@@ -1,26 +1,34 @@
-import React from 'react'
-import { connect } from 'react-redux'
 import {
   ActivityIndicator,
+  Animated,
   Button,
+  Easing,
+  FlatList,
   Image,
   ImageBackground,
   Platform,
-  View,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
   ScrollView,
+  StyleSheet,
+  TouchableHighlight,
+  View,
 } from 'react-native'
-import Style from './CatchesScreenStyle'
-import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
-import { Text, TextInput, NumericInput, DateTimeInput } from 'App/Components'
+import { ApplicationStyles, Colors, Fonts, Helpers, Images, Metrics } from 'App/Theme'
+import { DateTimeInput, NumericInput, Text, TextInput } from 'App/Components'
 
+import Geolocation from '@react-native-community/geolocation'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import React from 'react'
+import Style from './CatchesScreenStyle'
+import { connect } from 'react-redux'
 import { validationService } from 'App/Services/FormValidationService'
+
 class CatchesFormScreen extends React.Component {
   constructor(props) {
     super(props)
+    this.animatedValue = new Animated.Value(0)
+    this.scannerViewAnimatedValue = new Animated.Value(Metrics.deviceWidth)
     this.state = {
+      focusedScreenIndex: 0,
       inputs: {
         fish_type: {
           type: 'FishType',
@@ -59,6 +67,10 @@ class CatchesFormScreen extends React.Component {
           value: '',
         },
       },
+      screens: [
+        { name: 'generalInfo', isFocused: true },
+        { name: 'detailedInfo', isFocused: false },
+      ],
     }
 
     this.onInputChange = validationService.onInputChange.bind(this)
@@ -66,7 +78,16 @@ class CatchesFormScreen extends React.Component {
     this.submit = this.submit.bind(this)
   }
 
+  animate = (animatedValue, toValue) => {
+    Animated.timing(animatedValue, {
+      toValue,
+      duration: 500,
+      useNativeDriver: true,
+    }).start()
+  }
+
   submit() {
+    this.animate(this.animatedValue, -1 * this.state.focusedScreenIndex * Metrics.deviceWidth)
     this.getFormValidation()
   }
 
@@ -78,114 +99,166 @@ class CatchesFormScreen extends React.Component {
     return null
   }
 
+  goToNextScreen = () => {
+    let currentScreenIndex = this.state.focusedScreenIndex + 1
+    this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
+      this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
+    )
+  }
+
+  goToPreviousScreen = () => {
+    let currentScreenIndex = this.state.focusedScreenIndex - 1
+    this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
+      this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
+    )
+  }
+
   render() {
+    const animatedStyle = {
+      transform: [{ translateX: this.animatedValue }],
+    }
     return (
-      <View style={Style.mainFormContainer}>
-        <ScrollView>
-          <View style={Style.container}>
-            <Text>Gatunek</Text>
-            <TextInput
-              onChangeText={(value) => {
-                this.onInputChange({ id: 'fish_type', value })
-              }}
-            />
-            {this.renderError('fish_type')}
-
-            <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
-              <View style={Style.container}>
-                <Text>Fish Dimension</Text>
-                <NumericInput
-                  inputIcon="ruler"
-                  onChangeText={(value) => {
-                    this.onInputChange({ id: 'fish_dimension', value })
-                  }}
-                />
-                {this.renderError('fish_dimension')}
-              </View>
-              <View style={{ flex: 0.25 }} />
-              <View style={Style.container}>
-                <Text>Waga</Text>
-                <NumericInput
-                  inputIcon="weight-kilogram"
-                  onChangeText={(value) => {
-                    this.onInputChange({ id: 'fish_weight', value })
-                  }}
-                />
-                {this.renderError('fish_weight')}
-              </View>
-            </View>
-
-            <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
-              <View style={Style.container}>
-                <Text>Data</Text>
-                <DateTimeInput
-                  mode="date"
-                  onChange={(value) => {
-                    this.onInputChange({ id: 'catch_time', value })
-                  }}
-                />
-                {this.renderError('catch_date')}
-              </View>
-              <View style={{ flex: 0.25 }} />
-              <View style={Style.container}>
-                <Text>godzina</Text>
-                <DateTimeInput
-                  mode="time"
-                  onChange={(value) => {
-                    this.onInputChange({ id: 'catch_time', value })
-                  }}
-                />
-                {this.renderError('catch_time')}
-              </View>
-            </View>
-
-            <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
-              <View style={Style.container}>
-                <Text>latitude</Text>
-                <TextInput
-                  onChangeText={(value) => {
-                    this.onInputChange({ id: 'catch_location_latitude', value })
-                  }}
-                />
-                {this.renderError('catch_location_latitude')}
-              </View>
-              <View style={{ flex: 0.25 }} />
-              <View style={Style.container}>
-                <Text>longitude</Text>
-                <TextInput
-                  onChangeText={(value) => {
-                    this.onInputChange({ id: 'catch_location_longitude', value })
-                  }}
-                />
-                {this.renderError('catch_location_longitude')}
-              </View>
-            </View>
-            <Text>Przynęta</Text>
-            <TextInput
-              onChangeText={(value) => {
-                this.onInputChange({ id: 'fishing_lure', value })
-              }}
-            />
-            {this.renderError('fishing_lure')}
-
-            <Text>Notatka</Text>
-            <TextInput
-              editable
-              maxLength={250}
-              multiline
-              numberOfLines={4}
-              onChangeText={(value) => {
-                this.onInputChange({ id: 'fishing_notes', value })
-              }}
-            />
-            {this.renderError('fishing_notes')}
-          </View>
-        </ScrollView>
-
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
+            {this.renderGeneralInformationPage()}
+          </Animated.View>
+          <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
+            {this.renderDetailedInformationPage()}
+          </Animated.View>
+        </View>
         <View style={styles.button}>
           <Button title="Submit Form" onPress={this.submit} />
         </View>
       </View>
+    )
+  }
+
+  renderGeneralInformationPage = () => {
+    return (
+      <ScrollView style={Style.mainFormContainer}>
+        <View>
+          <Text>Gatunek</Text>
+          <TextInput
+            onChangeText={(value) => {
+              this.onInputChange({ id: 'fish_type', value })
+            }}
+          />
+          {this.renderError('fish_type')}
+        </View>
+
+        <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
+          <View style={Style.container}>
+            <Text>Fish Dimension</Text>
+            <NumericInput
+              inputIcon="ruler"
+              onChangeText={(value) => {
+                this.onInputChange({ id: 'fish_dimension', value })
+              }}
+            />
+            {this.renderError('fish_dimension')}
+          </View>
+          <View style={{ flex: 0.25 }} />
+          <View style={Style.container}>
+            <Text>Waga</Text>
+            <NumericInput
+              inputIcon="weight-kilogram"
+              onChangeText={(value) => {
+                this.onInputChange({ id: 'fish_weight', value })
+              }}
+            />
+            {this.renderError('fish_weight')}
+          </View>
+        </View>
+
+        <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
+          <View style={Style.container}>
+            <Text>Data</Text>
+            <DateTimeInput
+              mode="date"
+              onChange={(value) => {
+                this.onInputChange({ id: 'catch_time', value })
+              }}
+            />
+            {this.renderError('catch_date')}
+          </View>
+          <View style={{ flex: 0.25 }} />
+          <View style={Style.container}>
+            <Text>godzina</Text>
+            <DateTimeInput
+              mode="time"
+              onChange={(value) => {
+                this.onInputChange({ id: 'catch_time', value })
+              }}
+            />
+            {this.renderError('catch_time')}
+          </View>
+        </View>
+        <View>
+          <Text>Przynęta</Text>
+          <TextInput
+            onChangeText={(value) => {
+              this.onInputChange({ id: 'fishing_lure', value })
+            }}
+          />
+          {this.renderError('fishing_lure')}
+        </View>
+
+        <View>
+          <Text>Notatka</Text>
+          <TextInput
+            editable
+            maxLength={250}
+            multiline
+            numberOfLines={4}
+            onChangeText={(value) => {
+              this.onInputChange({ id: 'fishing_notes', value })
+            }}
+          />
+          {this.renderError('fishing_notes')}
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Submit Form"
+            onPress={() => {
+              this.goToNextScreen()
+            }}
+          />
+        </View>
+      </ScrollView>
+    )
+  }
+  renderDetailedInformationPage = () => {
+    return (
+      <ScrollView style={Style.mainFormContainer}>
+        <Text>Przynęta</Text>
+        <TextInput
+          onChangeText={(value) => {
+            this.onInputChange({ id: 'fishing_lure', value })
+          }}
+        />
+        {this.renderError('fishing_lure')}
+
+        <Text>Notatka</Text>
+        <TextInput
+          editable
+          maxLength={250}
+          multiline
+          numberOfLines={4}
+          onChangeText={(value) => {
+            this.onInputChange({ id: 'fishing_notes', value })
+          }}
+        />
+        {this.renderError('fishing_notes')}
+        <View style={styles.button}>
+          <Button
+            title="Submit Form"
+            onPress={() => {
+              this.goToPreviousScreen()
+            }}
+          />
+        </View>
+      </ScrollView>
     )
   }
 }
