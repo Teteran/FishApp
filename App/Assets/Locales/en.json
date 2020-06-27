@@ -18,7 +18,11 @@
         "catch_date": "Catch Date",
         "catch_time": "Catch Time",
         "fishing_lure": "Fishing Lure",
-        "fishing_notes": "Fishing Notes"
+        "fishing_notes": "Fishing Notes",
+        "catch_location_latitude": "Catch Latitude",
+        "catch_location_longitude": "Catch Longitude",
+        "catch_temperature": "Catch Temperature",
+        "catch_pressure": "Catch Pressure",
       }
     }
   },

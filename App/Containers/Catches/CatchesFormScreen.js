@@ -57,6 +57,14 @@ class CatchesFormScreen extends React.Component {
           type: 'generic',
           value: '',
         },
+        catch_temperature: {
+          type: 'generic',
+          value: '',
+        },
+        catch_pressure: {
+          type: 'generic',
+          value: '',
+        },
         fishing_lure: {
           type: 'generic',
           value: '',
@@ -86,6 +94,7 @@ class CatchesFormScreen extends React.Component {
   }
 
   submit() {
+    console.log(this.props)
     this.animate(this.animatedValue, -1 * this.state.focusedScreenIndex * Metrics.deviceWidth)
     this.getFormValidation()
   }
@@ -122,7 +131,7 @@ class CatchesFormScreen extends React.Component {
   }
 
   render() {
-    console.log('aaa', this.state.focusedScreenIndex)
+    console.log(this.props.weatherConditions)
     const animatedStyle = {
       transform: [{ translateX: this.animatedValue }],
     }
@@ -147,7 +156,7 @@ class CatchesFormScreen extends React.Component {
           {this.isLastScreen() ? (
             <Button
               title={i18n.t('buttons.submit')}
-              style={{ width: '30%' }}
+              style={{ width: '30%', backgroundColor: Colors.success }}
               onPress={() => {
                 this.submit()
               }}
@@ -155,7 +164,7 @@ class CatchesFormScreen extends React.Component {
           ) : (
             <Button
               title={i18n.t('buttons.next')}
-              style={{ width: '30%' }}
+              style={{ width: '30%', backgroundColor: Colors.success }}
               onPress={() => {
                 this.goToNextScreen()
               }}
@@ -232,6 +241,52 @@ class CatchesFormScreen extends React.Component {
   renderDetailedInformationPage = () => {
     return (
       <ScrollView style={Style.mainFormContainer}>
+        <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
+          <View style={Style.container}>
+            <NumericInput
+              label={i18n.t('catches.form.labels.catch_location_latitude')}
+              onChangeText={(value) => {
+                this.onInputChange({ id: 'catch_location_latitude', value })
+              }}
+            />
+            {this.renderError('catch_location_latitude')}
+          </View>
+          <View style={{ flex: 0.25 }} />
+          <View style={Style.container}>
+            <NumericInput
+              label={i18n.t('catches.form.labels.catch_location_longitude')}
+              onChangeText={(value) => {
+                this.onInputChange({ id: 'catch_location_longitude', value })
+              }}
+            />
+            {this.renderError('catch_time')}
+          </View>
+        </View>
+
+        <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
+          <View style={Style.container}>
+            <NumericInput
+              label={i18n.t('catches.form.labels.catch_temperature')}
+              inputIcon="thermometer"
+              onChangeText={(value) => {
+                this.onInputChange({ id: 'catch_temperature', value })
+              }}
+            />
+            {this.renderError('catch_temperature')}
+          </View>
+          <View style={{ flex: 0.25 }} />
+
+          <View style={Style.container}>
+            <NumericInput
+              label={i18n.t('catches.form.labels.catch_pressure')}
+              inputIcon="gauge"
+              onChangeText={(value) => {
+                this.onInputChange({ id: 'catch_pressure', value })
+              }}
+            />
+            {this.renderError('catch_pressure')}
+          </View>
+        </View>
         <TextInput
           label={i18n.t('catches.form.labels.fishing_lure')}
           onChangeText={(value) => {
@@ -282,7 +337,9 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  weatherConditions: state?.weatherData?.weatherData?.main,
+})
 
 const mapDispatchToProps = (dispatch) => ({})
 
