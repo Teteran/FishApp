@@ -4,9 +4,8 @@ import {
   ImageBackground,
   Platform,
   View,
-  TouchableOpacity,
   FlatList,
-  TouchableHighlight,
+  TouchableNativeFeedback,
 } from 'react-native'
 import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Geolocation from '@react-native-community/geolocation'
@@ -14,7 +13,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { PropTypes } from 'prop-types'
 import React from 'react'
 import Style from './CatchesScreenStyle'
-import { Text, GradientBackground, ListItem } from 'App/Components'
+import { Text, GradientBackground, ListItem, Button } from 'App/Components'
 import i18n from 'App/Services/i18n'
 import WeatherActions from 'App/Stores/Weather/Actions'
 import { connect } from 'react-redux'
@@ -55,13 +54,9 @@ class CatchesScreen extends React.Component {
           )}
           keyExtractor={(item) => item.id}
         />
-        <TouchableHighlight
-          underlayColor="#DDDDDD"
-          onPress={this.onPressListItem}
-          style={[ApplicationStyles.floatingButton, Style.addNewCatchFloatingButton]}
-        >
+        <Button onPress={this.onPressListItem}>
           <Text style={Fonts.h1}>+</Text>
-        </TouchableHighlight>
+        </Button>
       </View>
     )
   }

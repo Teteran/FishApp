@@ -16,25 +16,28 @@ export default class NumericInput extends React.Component {
   }
   render() {
     return (
-      <View style={ApplicationStyles.inputContainer}>
-        <RNTextInput
-          {...this.props}
-          keyboardType="numeric"
-          maxLength={9}
-          style={[ApplicationStyles.inputText]}
-          onChangeText={(value) => {
-            this.validateInputValue(value)
-          }}
-          value={this.state.value}
-        />
-        {this.props.inputIcon && (
-          <MaterialCommunityIcons
-            name={this.props.inputIcon}
-            color={Colors.error}
-            size={30}
-            style={ApplicationStyles.inputIcon}
+      <View>
+        <Text style={ApplicationStyles.inputLabelText}>{this.props.label}</Text>
+        <View style={ApplicationStyles.inputContainer}>
+          <RNTextInput
+            {...this.props}
+            keyboardType="numeric"
+            maxLength={9}
+            style={[ApplicationStyles.inputText]}
+            onChangeText={(value) => {
+              this.validateInputValue(value)
+            }}
+            value={this.state.value}
           />
-        )}
+          {this.props.inputIcon && (
+            <MaterialCommunityIcons
+              name={this.props.inputIcon}
+              color={Colors.error}
+              size={30}
+              style={ApplicationStyles.inputIcon}
+            />
+          )}
+        </View>
       </View>
     )
   }

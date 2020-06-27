@@ -7,7 +7,13 @@ import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/
 
 export default {
   button: {
+    ...Helpers.center,
+    ...Metrics.smallVerticalPadding,
+    ...Metrics.horizontalPadding,
+    ...Metrics.horizontalMargin,
+    ...Metrics.tinyVerticalMargin,
     backgroundColor: Colors.primary,
+    borderRadius: 5,
   },
   shadow: {
     shadowColor: '#000',
@@ -41,6 +47,13 @@ export default {
     flex: 3,
     ...Fonts.normal,
     textAlign: 'center',
+    color: Colors.text,
+    padding: 0,
+    marginHorizontal: 5,
+  },
+  inputLabelText: {
+    ...Fonts.medium,
+    textAlign: 'left',
     color: Colors.text,
     padding: 0,
     marginHorizontal: 5,

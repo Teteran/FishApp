@@ -1,7 +1,6 @@
 import {
   ActivityIndicator,
   Animated,
-  Button,
   Easing,
   FlatList,
   Image,
@@ -9,24 +8,24 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  TouchableHighlight,
+  TouchableNativeFeedback,
   View,
 } from 'react-native'
 import { ApplicationStyles, Colors, Fonts, Helpers, Images, Metrics } from 'App/Theme'
-import { DateTimeInput, NumericInput, Text, TextInput } from 'App/Components'
-
+import { DateTimeInput, NumericInput, Text, TextInput, Button } from 'App/Components'
+import i18n from 'App/Services/i18n'
 import Geolocation from '@react-native-community/geolocation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import React from 'react'
 import Style from './CatchesScreenStyle'
 import { connect } from 'react-redux'
 import { validationService } from 'App/Services/FormValidationService'
+const screensQuantity = 2
 
 class CatchesFormScreen extends React.Component {
   constructor(props) {
     super(props)
     this.animatedValue = new Animated.Value(0)
-    this.scannerViewAnimatedValue = new Animated.Value(Metrics.deviceWidth)
     this.state = {
       focusedScreenIndex: 0,
       inputs: {
@@ -100,26 +99,36 @@ class CatchesFormScreen extends React.Component {
   }
 
   goToNextScreen = () => {
-    let currentScreenIndex = this.state.focusedScreenIndex + 1
+    let currentScreenIndex = this.state.focusedScreenIndex
+    if (this.isLastScreen()) return
+    currentScreenIndex += 1
     this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
       this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
     )
   }
 
   goToPreviousScreen = () => {
-    let currentScreenIndex = this.state.focusedScreenIndex - 1
+    let currentScreenIndex = this.state.focusedScreenIndex
+    if (currentScreenIndex <= 0) return
+    currentScreenIndex -= 1
     this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
       this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
     )
   }
 
+  isLastScreen = () => {
+    let currentScreenIndex = this.state.focusedScreenIndex
+    return currentScreenIndex >= screensQuantity - 1
+  }
+
   render() {
+    console.log('aaa', this.state.focusedScreenIndex)
     const animatedStyle = {
       transform: [{ translateX: this.animatedValue }],
     }
     return (
-      <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={Helpers.fill}>
+        <View style={Helpers.fillRow}>
           <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
             {this.renderGeneralInformationPage()}
           </Animated.View>
@@ -127,8 +136,31 @@ class CatchesFormScreen extends React.Component {
             {this.renderDetailedInformationPage()}
           </Animated.View>
         </View>
-        <View style={styles.button}>
-          <Button title="Submit Form" onPress={this.submit} />
+        <View style={[Helpers.row, Helpers.mainSpaceAround, Metrics.verticalMargin]}>
+          <Button
+            title={i18n.t('buttons.previous')}
+            style={{ width: '30%' }}
+            onPress={() => {
+              this.goToPreviousScreen()
+            }}
+          />
+          {this.isLastScreen() ? (
+            <Button
+              title={i18n.t('buttons.submit')}
+              style={{ width: '30%' }}
+              onPress={() => {
+                this.submit()
+              }}
+            />
+          ) : (
+            <Button
+              title={i18n.t('buttons.next')}
+              style={{ width: '30%' }}
+              onPress={() => {
+                this.goToNextScreen()
+              }}
+            />
+          )}
         </View>
       </View>
     )
@@ -138,8 +170,8 @@ class CatchesFormScreen extends React.Component {
     return (
       <ScrollView style={Style.mainFormContainer}>
         <View>
-          <Text>Gatunek</Text>
           <TextInput
+            label={i18n.t('catches.form.labels.fish_type')}
             onChangeText={(value) => {
               this.onInputChange({ id: 'fish_type', value })
             }}
@@ -149,8 +181,8 @@ class CatchesFormScreen extends React.Component {
 
         <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
           <View style={Style.container}>
-            <Text>Fish Dimension</Text>
             <NumericInput
+              label={i18n.t('catches.form.labels.fish_dimension')}
               inputIcon="ruler"
               onChangeText={(value) => {
                 this.onInputChange({ id: 'fish_dimension', value })
@@ -160,8 +192,8 @@ class CatchesFormScreen extends React.Component {
           </View>
           <View style={{ flex: 0.25 }} />
           <View style={Style.container}>
-            <Text>Waga</Text>
             <NumericInput
+              label={i18n.t('catches.form.labels.fish_weight')}
               inputIcon="weight-kilogram"
               onChangeText={(value) => {
                 this.onInputChange({ id: 'fish_weight', value })
@@ -173,19 +205,19 @@ class CatchesFormScreen extends React.Component {
 
         <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
           <View style={Style.container}>
-            <Text>Data</Text>
             <DateTimeInput
+              label={i18n.t('catches.form.labels.catch_date')}
               mode="date"
               onChange={(value) => {
-                this.onInputChange({ id: 'catch_time', value })
+                this.onInputChange({ id: 'catch_date', value })
               }}
             />
             {this.renderError('catch_date')}
           </View>
           <View style={{ flex: 0.25 }} />
           <View style={Style.container}>
-            <Text>godzina</Text>
             <DateTimeInput
+              label={i18n.t('catches.form.labels.catch_time')}
               mode="time"
               onChange={(value) => {
                 this.onInputChange({ id: 'catch_time', value })
@@ -194,53 +226,22 @@ class CatchesFormScreen extends React.Component {
             {this.renderError('catch_time')}
           </View>
         </View>
-        <View>
-          <Text>Przynęta</Text>
-          <TextInput
-            onChangeText={(value) => {
-              this.onInputChange({ id: 'fishing_lure', value })
-            }}
-          />
-          {this.renderError('fishing_lure')}
-        </View>
-
-        <View>
-          <Text>Notatka</Text>
-          <TextInput
-            editable
-            maxLength={250}
-            multiline
-            numberOfLines={4}
-            onChangeText={(value) => {
-              this.onInputChange({ id: 'fishing_notes', value })
-            }}
-          />
-          {this.renderError('fishing_notes')}
-        </View>
-        <View style={styles.button}>
-          <Button
-            title="Submit Form"
-            onPress={() => {
-              this.goToNextScreen()
-            }}
-          />
-        </View>
       </ScrollView>
     )
   }
   renderDetailedInformationPage = () => {
     return (
       <ScrollView style={Style.mainFormContainer}>
-        <Text>Przynęta</Text>
         <TextInput
+          label={i18n.t('catches.form.labels.fishing_lure')}
           onChangeText={(value) => {
             this.onInputChange({ id: 'fishing_lure', value })
           }}
         />
         {this.renderError('fishing_lure')}
 
-        <Text>Notatka</Text>
         <TextInput
+          label={i18n.t('catches.form.labels.fishing_notes')}
           editable
           maxLength={250}
           multiline
@@ -250,14 +251,6 @@ class CatchesFormScreen extends React.Component {
           }}
         />
         {this.renderError('fishing_notes')}
-        <View style={styles.button}>
-          <Button
-            title="Submit Form"
-            onPress={() => {
-              this.goToPreviousScreen()
-            }}
-          />
-        </View>
       </ScrollView>
     )
   }
@@ -278,8 +271,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   button: {
+    alignItems: 'flex-end',
     justifyContent: 'flex-end',
     marginBottom: 20,
+    borderRadius: 5,
+    backgroundColor: Colors.red,
+    ...Metrics.horizontalPadding,
+    ...Metrics.smallVerticalPadding,
+    ...Metrics.horizontalMargin,
   },
 })
 

@@ -8,5 +8,23 @@
   "home": {
     "welcome": "Welcome to %{appName}!",
     "station": "Station: %{stationName}"
+  },
+  "catches": {
+    "form": {
+      "labels": {
+        "fish_type": "Fish Type",
+        "fish_dimension": "Fish Dimension",
+        "fish_weight": "Fish Weight",
+        "catch_date": "Catch Date",
+        "catch_time": "Catch Time",
+        "fishing_lure": "Fishing Lure",
+        "fishing_notes": "Fishing Notes"
+      }
+    }
+  },
+  "buttons": {
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit"
   }
 }
