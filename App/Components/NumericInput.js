@@ -7,11 +7,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import DatePicker from '@react-native-community/datetimepicker'
 import moment from 'moment'
 export default class NumericInput extends React.Component {
-  static defaultProps = { inputValidationRegex: /^\d*(\,|\.)?\d*$/ }
+  static defaultProps = { inputValidationRegex: /^\d*(\,|\.)?\d*$/, defaultValue: 0 }
   constructor(props) {
     super(props)
     this.state = {
-      value: '',
+      value: this.props.defaultValue,
     }
   }
   render() {
@@ -27,7 +27,7 @@ export default class NumericInput extends React.Component {
             onChangeText={(value) => {
               this.validateInputValue(value)
             }}
-            value={this.state.value}
+            value={`${this.state?.value}`}
           />
           {this.props.inputIcon && (
             <MaterialCommunityIcons
@@ -53,4 +53,5 @@ NumericInput.propTypes = {
   onChangeText: PropTypes.func.isRequired,
   inputValidationRegex: PropTypes.instanceOf(RegExp),
   inputIcon: PropTypes.string,
+  defaultValue: PropTypes.number,
 }

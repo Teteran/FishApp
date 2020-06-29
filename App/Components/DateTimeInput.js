@@ -12,9 +12,12 @@ export default class DateTimeInput extends React.Component {
     super(props)
     this.state = {
       show: false,
+      selectedDate: new Date(),
     }
   }
   render() {
+    const formatString = this.props.mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm'
+    const selectedDate = moment(this.state.selectedDate).format(formatString)
     return (
       <View>
         <Text style={ApplicationStyles.inputLabelText}>{this.props.label}</Text>
@@ -22,11 +25,11 @@ export default class DateTimeInput extends React.Component {
           <View style={ApplicationStyles.inputContainer}>
             <RNTextInput
               {...this.props}
-              maxLength={9}
+              maxLength={10}
               caretHidden
               editable={false}
               style={ApplicationStyles.inputText}
-              value={this.state.selectedDate}
+              value={selectedDate}
             />
             {this.state.show && (
               <DatePicker
@@ -35,8 +38,6 @@ export default class DateTimeInput extends React.Component {
                 mode={this.props.mode}
                 maximumDate={new Date(2020, 6, 28)}
                 onChange={(event, selectedDate) => {
-                  const formatString = this.props.mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm'
-                  selectedDate = moment(selectedDate).format(formatString)
                   this.setState({ show: false, selectedDate }, () =>
                     this.props.onChange(selectedDate)
                   )

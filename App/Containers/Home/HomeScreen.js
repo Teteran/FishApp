@@ -48,7 +48,7 @@ class HomeScreen extends React.Component {
               alignItems: 'center',
             }}
           >
-            <Text style={[Fonts.h1]}>{Math.floor(32)}</Text>
+            <Text style={[Fonts.h1]}>{Math.floor(weatherConditions?.main?.temp)}</Text>
             <Text style={[Fonts.normal, { height: 32 }]}>°C</Text>
           </View>
         </View>

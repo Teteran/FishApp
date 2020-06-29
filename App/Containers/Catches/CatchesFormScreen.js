@@ -80,6 +80,14 @@ class CatchesFormScreen extends React.Component {
       ],
     }
 
+    Geolocation.getCurrentPosition((info) => {
+      const { latitude, longitude } = info.coords
+      this.setState({
+        currentLatitude: latitude,
+        currentLongitude: longitude,
+      })
+    })
+
     this.onInputChange = validationService.onInputChange.bind(this)
     this.getFormValidation = validationService.getFormValidation.bind(this)
     this.submit = this.submit.bind(this)
@@ -118,7 +126,7 @@ class CatchesFormScreen extends React.Component {
 
   goToPreviousScreen = () => {
     let currentScreenIndex = this.state.focusedScreenIndex
-    if (currentScreenIndex <= 0) return
+    if (this.isFirstScreen()) return
     currentScreenIndex -= 1
     this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
       this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
@@ -129,9 +137,12 @@ class CatchesFormScreen extends React.Component {
     let currentScreenIndex = this.state.focusedScreenIndex
     return currentScreenIndex >= screensQuantity - 1
   }
+  isFirstScreen = () => {
+    let currentScreenIndex = this.state.focusedScreenIndex
+    return currentScreenIndex <= 0
+  }
 
   render() {
-    console.log(this.props.weatherConditions)
     const animatedStyle = {
       transform: [{ translateX: this.animatedValue }],
     }
@@ -149,6 +160,7 @@ class CatchesFormScreen extends React.Component {
           <Button
             title={i18n.t('buttons.previous')}
             style={{ width: '30%' }}
+            disabled={this.isFirstScreen()}
             onPress={() => {
               this.goToPreviousScreen()
             }}
@@ -245,6 +257,7 @@ class CatchesFormScreen extends React.Component {
           <View style={Style.container}>
             <NumericInput
               label={i18n.t('catches.form.labels.catch_location_latitude')}
+              defaultValue={this.state?.currentLatitude}
               onChangeText={(value) => {
                 this.onInputChange({ id: 'catch_location_latitude', value })
               }}
@@ -255,6 +268,7 @@ class CatchesFormScreen extends React.Component {
           <View style={Style.container}>
             <NumericInput
               label={i18n.t('catches.form.labels.catch_location_longitude')}
+              defaultValue={this.state?.currentLongitude}
               onChangeText={(value) => {
                 this.onInputChange({ id: 'catch_location_longitude', value })
               }}
@@ -268,6 +282,7 @@ class CatchesFormScreen extends React.Component {
             <NumericInput
               label={i18n.t('catches.form.labels.catch_temperature')}
               inputIcon="thermometer"
+              defaultValue={this?.props?.weatherConditions?.temp}
               onChangeText={(value) => {
                 this.onInputChange({ id: 'catch_temperature', value })
               }}
@@ -280,6 +295,7 @@ class CatchesFormScreen extends React.Component {
             <NumericInput
               label={i18n.t('catches.form.labels.catch_pressure')}
               inputIcon="gauge"
+              defaultValue={this?.props?.weatherConditions?.pressure}
               onChangeText={(value) => {
                 this.onInputChange({ id: 'catch_pressure', value })
               }}
