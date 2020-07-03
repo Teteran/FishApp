@@ -1,24 +1,12 @@
-import {
-  ActivityIndicator,
-  Animated,
-  Easing,
-  FlatList,
-  Image,
-  ImageBackground,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableNativeFeedback,
-  View,
-} from 'react-native'
-import { ApplicationStyles, Colors, Fonts, Helpers, Images, Metrics } from 'App/Theme'
-import { DateTimeInput, NumericInput, Text, TextInput, Button } from 'App/Components'
+import { Animated, ScrollView, StyleSheet, View } from 'react-native'
+import { Colors, Helpers, Metrics } from 'App/Theme'
+import { DateTimeInput, NumericInput, Text, TextInput, Button, SelectInput } from 'App/Components'
 import i18n from 'App/Services/i18n'
 import Geolocation from '@react-native-community/geolocation'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import React from 'react'
 import Style from './CatchesScreenStyle'
 import { connect } from 'react-redux'
+import { Config } from 'App/Config'
 import { validationService } from 'App/Services/FormValidationService'
 const screensQuantity = 2
 
@@ -35,19 +23,19 @@ class CatchesFormScreen extends React.Component {
         },
         fish_dimension: {
           type: 'FishDimension',
-          value: '',
+          value: 0,
         },
         fish_weight: {
           type: 'FishWeight',
-          value: '',
+          value: 0,
         },
         catch_date: {
           type: 'generic',
-          value: '',
+          value: new Date(),
         },
         catch_time: {
           type: 'generic',
-          value: '',
+          value: new Date(),
         },
         catch_location_latitude: {
           type: 'generic',
@@ -90,6 +78,7 @@ class CatchesFormScreen extends React.Component {
 
     this.onInputChange = validationService.onInputChange.bind(this)
     this.getFormValidation = validationService.getFormValidation.bind(this)
+    this.getInputValue = validationService.getInputValue.bind(this)
     this.submit = this.submit.bind(this)
   }
 
@@ -102,7 +91,7 @@ class CatchesFormScreen extends React.Component {
   }
 
   submit() {
-    console.log(this.props)
+    console.log('uuuu', this.state)
     this.animate(this.animatedValue, -1 * this.state.focusedScreenIndex * Metrics.deviceWidth)
     this.getFormValidation()
   }
@@ -191,11 +180,13 @@ class CatchesFormScreen extends React.Component {
     return (
       <ScrollView style={Style.mainFormContainer}>
         <View>
-          <TextInput
+          <SelectInput
             label={i18n.t('catches.form.labels.fish_type')}
-            onChangeText={(value) => {
+            value={this.getInputValue('fish_type')}
+            onChangeValue={(value) => {
               this.onInputChange({ id: 'fish_type', value })
             }}
+            data={Config.FISH_TYPES}
           />
           {this.renderError('fish_type')}
         </View>
@@ -205,7 +196,8 @@ class CatchesFormScreen extends React.Component {
             <NumericInput
               label={i18n.t('catches.form.labels.fish_dimension')}
               inputIcon="ruler"
-              onChangeText={(value) => {
+              value={this.getInputValue('fish_dimension')}
+              onChangeValue={(value) => {
                 this.onInputChange({ id: 'fish_dimension', value })
               }}
             />
@@ -216,7 +208,8 @@ class CatchesFormScreen extends React.Component {
             <NumericInput
               label={i18n.t('catches.form.labels.fish_weight')}
               inputIcon="weight-kilogram"
-              onChangeText={(value) => {
+              value={this.getInputValue('fish_weight')}
+              onChangeValue={(value) => {
                 this.onInputChange({ id: 'fish_weight', value })
               }}
             />
@@ -229,6 +222,7 @@ class CatchesFormScreen extends React.Component {
             <DateTimeInput
               label={i18n.t('catches.form.labels.catch_date')}
               mode="date"
+              value={this.getInputValue('catch_date')}
               onChange={(value) => {
                 this.onInputChange({ id: 'catch_date', value })
               }}
@@ -240,6 +234,7 @@ class CatchesFormScreen extends React.Component {
             <DateTimeInput
               label={i18n.t('catches.form.labels.catch_time')}
               mode="time"
+              value={this.getInputValue('catch_time')}
               onChange={(value) => {
                 this.onInputChange({ id: 'catch_time', value })
               }}
@@ -257,8 +252,8 @@ class CatchesFormScreen extends React.Component {
           <View style={Style.container}>
             <NumericInput
               label={i18n.t('catches.form.labels.catch_location_latitude')}
-              defaultValue={this.state?.currentLatitude}
-              onChangeText={(value) => {
+              value={this.getInputValue('catch_location_latitude')}
+              onChangeValue={(value) => {
                 this.onInputChange({ id: 'catch_location_latitude', value })
               }}
             />
@@ -268,8 +263,8 @@ class CatchesFormScreen extends React.Component {
           <View style={Style.container}>
             <NumericInput
               label={i18n.t('catches.form.labels.catch_location_longitude')}
-              defaultValue={this.state?.currentLongitude}
-              onChangeText={(value) => {
+              value={this.getInputValue('catch_location_longitude')}
+              onChangeValue={(value) => {
                 this.onInputChange({ id: 'catch_location_longitude', value })
               }}
             />
@@ -282,8 +277,8 @@ class CatchesFormScreen extends React.Component {
             <NumericInput
               label={i18n.t('catches.form.labels.catch_temperature')}
               inputIcon="thermometer"
-              defaultValue={this?.props?.weatherConditions?.temp}
-              onChangeText={(value) => {
+              value={this.getInputValue('catch_temperature')}
+              onChangeValue={(value) => {
                 this.onInputChange({ id: 'catch_temperature', value })
               }}
             />
@@ -295,8 +290,8 @@ class CatchesFormScreen extends React.Component {
             <NumericInput
               label={i18n.t('catches.form.labels.catch_pressure')}
               inputIcon="gauge"
-              defaultValue={this?.props?.weatherConditions?.pressure}
-              onChangeText={(value) => {
+              value={this.getInputValue('catch_pressure')}
+              onChangeValue={(value) => {
                 this.onInputChange({ id: 'catch_pressure', value })
               }}
             />

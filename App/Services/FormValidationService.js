@@ -7,6 +7,7 @@ export const validationService = {
   getInputValidationState,
   validateInput,
   getFormValidation,
+  getInputValue,
 }
 
 function onInputChange({ id, value, cb = () => {} }) {
@@ -23,6 +24,11 @@ function onInputChange({ id, value, cb = () => {} }) {
     },
     cb
   )
+}
+
+function getInputValue(id) {
+  const { inputs } = this.state
+  return inputs[id].value
 }
 
 function getInputValidationState({ input, value }) {
