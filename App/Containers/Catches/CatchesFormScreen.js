@@ -67,19 +67,20 @@ class CatchesFormScreen extends React.Component {
         { name: 'detailedInfo', isFocused: false },
       ],
     }
-
-    Geolocation.getCurrentPosition((info) => {
-      const { latitude, longitude } = info.coords
-      this.setState({
-        currentLatitude: latitude,
-        currentLongitude: longitude,
-      })
-    })
-
     this.onInputChange = validationService.onInputChange.bind(this)
     this.getFormValidation = validationService.getFormValidation.bind(this)
     this.getInputValue = validationService.getInputValue.bind(this)
     this.submit = this.submit.bind(this)
+  }
+
+  componentDidMount() {
+    Geolocation.getCurrentPosition((info) => {
+      const { latitude, longitude } = info.coords
+      this.onInputChange({ id: 'catch_location_latitude', value: latitude })
+      this.onInputChange({ id: 'catch_location_longitude', value: longitude })
+      this.onInputChange({ id: 'catch_temperature', value: this.props.weatherConditions?.temp })
+      this.onInputChange({ id: 'catch_pressure', value: this.props.weatherConditions?.pressure })
+    })
   }
 
   animate = (animatedValue, toValue) => {
@@ -91,8 +92,6 @@ class CatchesFormScreen extends React.Component {
   }
 
   submit() {
-    console.log('uuuu', this.state)
-    this.animate(this.animatedValue, -1 * this.state.focusedScreenIndex * Metrics.deviceWidth)
     this.getFormValidation()
   }
 
