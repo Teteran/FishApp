@@ -1,16 +1,14 @@
-import { ActivityIndicator, Button, Image, ImageBackground, Platform, View } from 'react-native'
-import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
+import { ImageBackground, View } from 'react-native'
+import { Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
 
 import Geolocation from '@react-native-community/geolocation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { PropTypes } from 'prop-types'
 import React from 'react'
 import Style from './HomeScreenStyle'
 import { Text, GradientBackground } from 'App/Components'
 import i18n from 'App/Services/i18n'
 import WeatherActions from 'App/Stores/Weather/Actions'
 import { connect } from 'react-redux'
-import Weather from 'App/Assets/Images/11n.svg'
 
 class HomeScreen extends React.Component {
   componentDidMount() {

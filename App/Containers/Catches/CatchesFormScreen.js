@@ -8,6 +8,7 @@ import Style from './CatchesScreenStyle'
 import { connect } from 'react-redux'
 import { Config } from 'App/Config'
 import { validationService } from 'App/Services/FormValidationService'
+import CatchesAction from 'App/Stores/Catches/Actions'
 const screensQuantity = 2
 
 class CatchesFormScreen extends React.Component {
@@ -70,6 +71,7 @@ class CatchesFormScreen extends React.Component {
     this.onInputChange = validationService.onInputChange.bind(this)
     this.getFormValidation = validationService.getFormValidation.bind(this)
     this.getInputValue = validationService.getInputValue.bind(this)
+    this.mapFormInputsToObject = validationService.mapFormInputsToObject.bind(this)
     this.submit = this.submit.bind(this)
   }
 
@@ -92,7 +94,9 @@ class CatchesFormScreen extends React.Component {
   }
 
   submit() {
-    this.getFormValidation()
+    const { inputs } = this.state
+    this.props.addNewCatch(this.mapFormInputsToObject(inputs))
+    this.props.navigation.goBack()
   }
 
   renderError(id) {
@@ -351,7 +355,9 @@ const mapStateToProps = (state) => ({
   weatherConditions: state?.weatherData?.weatherData?.main,
 })
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  addNewCatch: (newCatch) => dispatch(CatchesAction.addNewCatch(newCatch)),
+})
 
 export default connect(
   mapStateToProps,

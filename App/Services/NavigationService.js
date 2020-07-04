@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { CommonActions, StackActions } from '@react-navigation/native'
 
 const navigationRef = React.createRef()
 

@@ -3,7 +3,7 @@ import configureStore from './CreateStore'
 import rootSaga from 'App/Sagas'
 import { reducer as ExampleReducer } from './Example/Reducers'
 import { reducer as WeatherDataReducer } from './Weather/Reducers'
-
+import { reducer as CatchesReducer } from './Catches/Reducers'
 export default () => {
   const rootReducer = combineReducers({
     /**
@@ -12,6 +12,7 @@ export default () => {
      */
     example: ExampleReducer,
     weatherData: WeatherDataReducer,
+    catches: CatchesReducer,
   })
 
   return configureStore(rootReducer, rootSaga)

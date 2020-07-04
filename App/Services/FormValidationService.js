@@ -8,6 +8,7 @@ export const validationService = {
   validateInput,
   getFormValidation,
   getInputValue,
+  mapFormInputsToObject,
 }
 
 function onInputChange({ id, value, cb = () => {} }) {
@@ -71,4 +72,12 @@ function getFormValidation() {
   this.setState({
     inputs: updatedInputs,
   })
+}
+
+function mapFormInputsToObject(inputs) {
+  let tmp = {}
+  for (const [key, { value }] of Object.entries(inputs)) {
+    tmp[key] = value || ''
+  }
+  return tmp
 }
