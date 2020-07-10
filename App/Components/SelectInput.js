@@ -18,7 +18,7 @@ export default function SelectInput(props) {
           }}
         >
           {props.data.map((item) => (
-            <Picker.Item key={item.type} label={item.type} value={item} />
+            <Picker.Item key={item.name} label={item.name} value={item} />
           ))}
         </Picker>
       </View>

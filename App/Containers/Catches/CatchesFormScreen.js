@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { Config } from 'App/Config'
 import { validationService } from 'App/Services/FormValidationService'
 import CatchesAction from 'App/Stores/Catches/Actions'
+import { ApplicationStyles } from 'App/Theme'
 const screensQuantity = 2
 
 class CatchesFormScreen extends React.Component {
@@ -183,7 +184,7 @@ class CatchesFormScreen extends React.Component {
 
   renderGeneralInformationPage = () => {
     return (
-      <ScrollView style={Style.mainFormContainer}>
+      <ScrollView style={ApplicationStyles.card}>
         <View>
           <SelectInput
             label={i18n.t('catches.form.labels.fish_type')}
@@ -252,7 +253,7 @@ class CatchesFormScreen extends React.Component {
   }
   renderDetailedInformationPage = () => {
     return (
-      <ScrollView style={Style.mainFormContainer}>
+      <ScrollView style={ApplicationStyles.card}>
         <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
           <View style={Style.container}>
             <NumericInput

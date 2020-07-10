@@ -14,6 +14,5 @@ Text.propTypes = { style: PropTypes.oneOfType([PropTypes.object, PropTypes.array
 const style = StyleSheet.create({
   defaultTextStyle: {
     ...Fonts.normal,
-    textAlign: 'center',
   },
 })

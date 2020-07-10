@@ -3,7 +3,7 @@
  *
  * Use it to define generic component styles (e.g. the default text styles, default button styles...).
  */
-import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
+import { Fonts, Helpers, Metrics, Colors } from 'App/Theme'
 
 export default {
   button: {
@@ -62,5 +62,25 @@ export default {
     flex: 1,
     ...Helpers.rowCenter,
     textAlign: 'center',
+  },
+  card: {
+    ...Metrics.verticalMargin,
+    ...Metrics.horizontalMargin,
+    ...Metrics.verticalPadding,
+    ...Metrics.horizontalPadding,
+    flex: 1,
+    backgroundColor: Colors.white,
+    borderWidth: 0.5,
+    borderColor: Colors.grey,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
+
+    elevation: 1,
   },
 }

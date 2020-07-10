@@ -2,10 +2,11 @@ import React from 'react'
 import { View, TouchableNativeFeedback, TextInput as RNTextInput } from 'react-native'
 import { PropTypes } from 'prop-types'
 import { Text } from 'App/Components'
+import { Utils } from 'App/Utils'
 import { ApplicationStyles, Colors } from 'App/Theme'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DatePicker from '@react-native-community/datetimepicker'
-import moment from 'moment'
+
 export default class DateTimeInput extends React.Component {
   static defaultProps = { mode: 'time' }
   constructor(props) {
@@ -17,7 +18,7 @@ export default class DateTimeInput extends React.Component {
   }
   render() {
     const formatString = this.props.mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm'
-    const selectedDate = moment(this.state.selectedDate).format(formatString)
+    const selectedDate = Utils.formatDate(this.state.selectedDate, formatString)
     return (
       <View>
         <Text style={ApplicationStyles.inputLabelText}>{this.props.label}</Text>

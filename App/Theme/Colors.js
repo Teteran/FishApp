@@ -14,6 +14,7 @@ export default {
   grey2: '#bdbdbd',
   yellow: '#ff00ff',
   text: '#212529',
+  text2: '#21252950',
   primary: '#007bff',
   success: '#28a745',
   error: '#dc3545',
