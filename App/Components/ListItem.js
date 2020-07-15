@@ -6,11 +6,7 @@ export default class ListItem extends React.Component {
     return (
       <TouchableNativeFeedback onPress={this.props.onPress}>
         <View
-          style={[
-            ApplicationStyles.card,
-            Metrics.smallVerticalMargin,
-            Metrics.smallHorizontalMargin,
-          ]}
+          style={[ApplicationStyles.card, Metrics.tinyVerticalMargin, Metrics.tinyHorizontalMargin]}
         >
           {this.props.children}
         </View>

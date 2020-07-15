@@ -40,7 +40,7 @@ class CatchesScreen extends React.Component {
           style={{ width: '100%', height: 200 }}
         />
         <View style={[Helpers.rowCenter, Helpers.mainSpaceBetween]}>
-          <Text style={[Fonts.normal, { color: Colors.text }]}>{fish_type.name}</Text>
+          <Text style={[Fonts.normal, { color: Colors.text }]}>{fish_type.name || 'Unknown'}</Text>
           <Text style={[Fonts.small, { color: Colors.text2 }]}>{Utils.formatDate(catch_date)}</Text>
         </View>
         <View style={[Helpers.rowCenter, Helpers.mainSpaceBetween]}>

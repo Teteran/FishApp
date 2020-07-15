@@ -77,6 +77,10 @@ function getFormValidation() {
 function mapFormInputsToObject(inputs) {
   let tmp = {}
   for (const [key, { value }] of Object.entries(inputs)) {
+    if (value === 0) {
+      tmp[key] = 0
+      continue
+    }
     tmp[key] = value || ''
   }
   return tmp

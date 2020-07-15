@@ -96,8 +96,6 @@ class CatchesFormScreen extends React.Component {
 
   submit() {
     const { inputs } = this.state
-    let newCatch = this.mapFormInputsToObject(inputs)
-
     this.props.addNewCatch(this.mapFormInputsToObject(inputs))
     this.props.navigation.goBack()
   }
