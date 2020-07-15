@@ -28,7 +28,14 @@ export default class Button extends React.Component {
           {this.props.children ? (
             this.props.children
           ) : (
-            <Text style={this.props.buttonTitleStyle || Fonts.normal}>{this.props.title}</Text>
+            <Text
+              style={[
+                this.props.buttonTitleStyle || Fonts.normal,
+                { textAlign: 'center', textAlignVertical: 'center' },
+              ]}
+            >
+              {this.props.title}
+            </Text>
           )}
         </View>
       </TouchableNativeFeedback>
@@ -37,6 +44,6 @@ export default class Button extends React.Component {
 }
 
 Button.propTypes = {
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 const styles = StyleSheet.create({})

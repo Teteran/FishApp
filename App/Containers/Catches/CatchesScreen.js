@@ -5,6 +5,7 @@ import Style from './CatchesScreenStyle'
 import { Utils } from 'App/Utils'
 import { Text, ListItem, Button } from 'App/Components'
 import { connect } from 'react-redux'
+import ApplicationStyles from '../../Theme/ApplicationStyles'
 
 class CatchesScreen extends React.Component {
   render() {
@@ -16,9 +17,12 @@ class CatchesScreen extends React.Component {
           renderItem={({ item }) => this._renderListItem(item)}
           keyExtractor={(item) => item.id}
         />
-        <Button onPress={this._onPressListItem}>
-          <Text style={Fonts.h1}>+</Text>
-        </Button>
+        <Button
+          onPress={this._onPressListItem}
+          style={[ApplicationStyles.floatingButton, { backgroundColor: Colors.success }]}
+          title="+"
+          buttonTitleStyle={Fonts.h1}
+        />
       </View>
     )
   }
