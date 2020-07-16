@@ -6,6 +6,7 @@ import TextInput from './TextInput'
 import NumericInput from './NumericInput'
 import SelectInput from './SelectInput'
 import Button from './Button'
+import Modal from './Modal'
 
 export {
   Text,
@@ -16,4 +17,5 @@ export {
   NumericInput,
   Button,
   SelectInput,
+  Modal,
 }

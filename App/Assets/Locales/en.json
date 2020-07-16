@@ -22,7 +22,7 @@
         "catch_location_latitude": "Catch Latitude",
         "catch_location_longitude": "Catch Longitude",
         "catch_temperature": "Catch Temperature",
-        "catch_pressure": "Catch Pressure",
+        "catch_pressure": "Catch Pressure"
       }
     }
   },
@@ -30,5 +30,8 @@
     "next": "Next",
     "previous": "Previous",
     "submit": "Submit"
+  },
+  "general":{
+    "cancel":"cancel"
   }
 }
