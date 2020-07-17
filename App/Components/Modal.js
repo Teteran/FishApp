@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, TouchableOpacity, Modal as RNModal, StyleSheet } from 'react-native'
-import { ApplicationStyles, Metrics, Colors, Helpers } from 'App/Theme'
+import { Metrics, Colors, Helpers } from 'App/Theme'
 import { PropTypes } from 'prop-types'
 import { Text } from 'App/Components'
 import Fonts from '../Theme/Fonts'
@@ -11,8 +11,12 @@ export default function Modal({
   onModalVisibleChange,
   modalVisible,
   modalTitle,
-  actions,
+  actions = [],
 }) {
+  const defaultAction = {
+    label: i18n.t('general.cancel'),
+    action: () => onModalVisibleChange(false),
+  }
   return (
     <RNModal
       animationType="fade"
@@ -26,7 +30,8 @@ export default function Modal({
 
           <View style={[Helpers.column, Metrics.verticalMargin]}>{children}</View>
           <View style={styles.buttonsContainer}>
-            {actions.map((action, index) => renderAction(action, index))}
+            {renderAction(defaultAction)}
+            {actions && actions.map((action, index) => renderAction(action, index))}
           </View>
         </View>
       </View>
@@ -36,16 +41,27 @@ export default function Modal({
 
 const renderAction = ({ label, action }, index) => {
   return (
-    <TouchableOpacity style={styles.actionButton} onPress={action} key={index}>
+    <TouchableOpacity
+      style={styles.actionButton}
+      onPress={(e) => {
+        action(e)
+        onModalVisibleChange(false)
+      }}
+      key={index}
+    >
       <Text style={styles.actionButtonLabel}>{label}</Text>
     </TouchableOpacity>
   )
 }
 
-Modal.defaultProps = {
-  actions: [{ label: i18n.t('general.cancel'), action: () => onModalVisibleChange(false) }],
+Modal.propTypes = {
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      action: PropTypes.function,
+    })
+  ),
 }
-Modal.propTypes = { buttons: PropTypes.array }
 
 const styles = StyleSheet.create({
   centeredView: {
