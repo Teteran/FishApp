@@ -1,23 +1,45 @@
 import React, { useState } from 'react'
-import { View, TextInput as RNTextInput, TouchableNativeFeedback, StyleSheet } from 'react-native'
-import { WheelPicker } from 'react-native-wheel-picker-android'
+import { View, TextInput as RNTextInput, TouchableNativeFeedback } from 'react-native'
+
 import { PropTypes } from 'prop-types'
-import { Text, Modal } from 'App/Components'
-import { ApplicationStyles, Colors } from 'App/Theme'
+import { Text, Modal, WheelPicker } from 'App/Components'
+import { ApplicationStyles, Colors, Metrics, Helpers } from 'App/Theme'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const wheelPickerData = ['1', '2', '3', '4', '5', '6']
 export default function NumericInput(props) {
-  const [selectedItem, setSelectedItem] = useState(0)
+  const { wheelsConfig } = props
+
+  const [selectedItems, setSelectedItems] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
-  onItemSelected = (selectedItem) => {
-    setSelectedItem(selectedItem)
+
+  onItemSelected = (index, value) => {
+    let tmp = [...selectedItems]
+    tmp[index] = value // replace e.target.value with whatever you want to change it to
+    setSelectedItems(tmp)
   }
 
   onModalVisibleChange = (e) => {
-    console.log('xxxx', e)
     setModalVisible(e)
   }
+
+  generateWheelDataFromConfig = (config) => {
+    let result = []
+    let y = 0
+    for (wheelConfig of wheelsConfig) {
+      let array = []
+      i = wheelConfig.min
+      while (i < wheelConfig.max) {
+        array.push(`${i.toString()} ${wheelConfig.unit || ''}`)
+        i += wheelConfig.step
+      }
+      result[y++] = array
+    }
+    return result
+  }
+
+  const wheelData = generateWheelDataFromConfig(wheelsConfig)
+
   return (
     <View>
       <Text style={ApplicationStyles.inputLabelText}>{props.label}</Text>
@@ -27,12 +49,26 @@ export default function NumericInput(props) {
             modalTitle={props.label}
             modalVisible={modalVisible}
             onModalVisibleChange={onModalVisibleChange}
-          />
+            actions={[{ label: 'done', action: () => console.log('xxxxx') }]}
+          >
+            <View style={Helpers.row}>
+              {wheelsConfig.map((data, index) => {
+                return (
+                  <WheelPicker
+                    key={index}
+                    selectedItem={selectedItems[index]}
+                    data={wheelData[index]}
+                    onItemSelected={(value) => onItemSelected(index, value)}
+                  />
+                )
+              })}
+            </View>
+          </Modal>
 
-          {/* <RNTextInput
+          <RNTextInput
             keyboardType="numeric"
             maxLength={9}
-            disabled
+            editable={false}
             style={[ApplicationStyles.inputText]}
             onChangeText={(value) => {
               if (props.inputValidationRegex.test(value) || value === '') {
@@ -40,7 +76,7 @@ export default function NumericInput(props) {
               }
             }}
             value={`${props.value}`}
-          /> */}
+          />
           {props.inputIcon && (
             <MaterialCommunityIcons
               name={props.inputIcon}
@@ -58,43 +94,19 @@ export default function NumericInput(props) {
 NumericInput.defaultProps = {
   inputValidationRegex: /^\d*(\,|\.)?\d*$/,
   value: 0,
+  wheelsConfig: [{ min: 0, max: 10, step: 1 }],
 }
 NumericInput.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   inputValidationRegex: PropTypes.instanceOf(RegExp),
   inputIcon: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  wheelsConfig: PropTypes.arrayOf(
+    PropTypes.shape({
+      min: PropTypes.number.isRequired,
+      max: PropTypes.number.isRequired,
+      step: PropTypes.number.isRequired,
+      unit: PropTypes.string,
+    })
+  ),
 }
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.transparentBlack,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    elevation: 5,
-    marginHorizontal: 50,
-  },
-  openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-})

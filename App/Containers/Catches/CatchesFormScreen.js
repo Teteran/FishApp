@@ -204,6 +204,10 @@ class CatchesFormScreen extends React.Component {
               onChangeValue={(value) => {
                 this.onInputChange({ id: 'fish_dimension', value })
               }}
+              wheelsConfig={[
+                { min: 0, max: 10, step: 1, unit: 'm' },
+                { min: 0, max: 100, step: 1, unit: 'cm' },
+              ]}
             />
             {this.renderError('fish_dimension')}
           </View>
@@ -216,6 +220,10 @@ class CatchesFormScreen extends React.Component {
               onChangeValue={(value) => {
                 this.onInputChange({ id: 'fish_weight', value })
               }}
+              wheelsConfig={[
+                { min: 0, max: 100, step: 1, unit: 'Kg' },
+                { min: 0, max: 1000, step: 50, unit: 'g' },
+              ]}
             />
             {this.renderError('fish_weight')}
           </View>
@@ -285,6 +293,7 @@ class CatchesFormScreen extends React.Component {
               onChangeValue={(value) => {
                 this.onInputChange({ id: 'catch_temperature', value })
               }}
+              wheelsConfig={[{ min: 0, max: 45, step: 0.5, unit: '°C' }]}
             />
             {this.renderError('catch_temperature')}
           </View>
@@ -298,6 +307,7 @@ class CatchesFormScreen extends React.Component {
               onChangeValue={(value) => {
                 this.onInputChange({ id: 'catch_pressure', value })
               }}
+              wheelsConfig={[{ min: 800, max: 1100, step: 0.5, unit: 'hPa' }]}
             />
             {this.renderError('catch_pressure')}
           </View>
