@@ -3,12 +3,11 @@ import { View, TextInput as RNTextInput, TouchableNativeFeedback } from 'react-n
 
 import { PropTypes } from 'prop-types'
 import { Text, Modal, WheelPicker } from 'App/Components'
-import { ApplicationStyles, Colors, Metrics, Helpers } from 'App/Theme'
+import { ApplicationStyles, Colors, Helpers } from 'App/Theme'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const wheelPickerData = ['1', '2', '3', '4', '5', '6']
 export default function NumericInput(props) {
-  const { wheelsConfig } = props
+  const { wheelsConfig, canBeZero } = props
 
   const [selectedItems, setSelectedItems] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
@@ -23,7 +22,7 @@ export default function NumericInput(props) {
     setModalVisible(e)
   }
 
-  generateWheelDataFromConfig = (config) => {
+  generateWheelDataFromConfig = () => {
     let result = []
     let y = 0
     for (wheelConfig of wheelsConfig) {
@@ -37,8 +36,21 @@ export default function NumericInput(props) {
     }
     return result
   }
-
   const wheelData = generateWheelDataFromConfig(wheelsConfig)
+
+  getCombinedSelectedValues = () => {
+    let string = ''
+    for (index in wheelData) {
+      if (wheelData[index][selectedItems[index]]) {
+        if (selectedItems[index] !== 0 || canBeZero || wheelData.length === 1)
+          string = `${string.replace(/\s/g, '')} ${wheelData[index][selectedItems[index]].replace(
+            /\s/g,
+            ''
+          )}`
+      }
+    }
+    return string
+  }
 
   return (
     <View>
@@ -49,15 +61,17 @@ export default function NumericInput(props) {
             modalTitle={props.label}
             modalVisible={modalVisible}
             onModalVisibleChange={onModalVisibleChange}
-            actions={[{ label: 'done', action: () => console.log('xxxxx') }]}
+            actions={[
+              { label: 'done', action: () => props.onChangeValue(getCombinedSelectedValues()) },
+            ]}
           >
             <View style={Helpers.row}>
-              {wheelsConfig.map((data, index) => {
+              {wheelData.map((data, index) => {
                 return (
                   <WheelPicker
                     key={index}
                     selectedItem={selectedItems[index]}
-                    data={wheelData[index]}
+                    data={data}
                     onItemSelected={(value) => onItemSelected(index, value)}
                   />
                 )

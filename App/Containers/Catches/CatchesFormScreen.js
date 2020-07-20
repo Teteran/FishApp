@@ -221,7 +221,7 @@ class CatchesFormScreen extends React.Component {
                 this.onInputChange({ id: 'fish_weight', value })
               }}
               wheelsConfig={[
-                { min: 0, max: 100, step: 1, unit: 'Kg' },
+                { min: 0, max: 100, step: 1, unit: 'kg' },
                 { min: 0, max: 1000, step: 50, unit: 'g' },
               ]}
             />
@@ -294,6 +294,7 @@ class CatchesFormScreen extends React.Component {
                 this.onInputChange({ id: 'catch_temperature', value })
               }}
               wheelsConfig={[{ min: 0, max: 45, step: 0.5, unit: '°C' }]}
+              canBeZero
             />
             {this.renderError('catch_temperature')}
           </View>
