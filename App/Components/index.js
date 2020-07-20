@@ -7,6 +7,7 @@ import NumericInput from './NumericInput'
 import SelectInput from './SelectInput'
 import Button from './Button'
 import Modal from './Modal'
+import WheelPicker from './WheelPicker'
 
 export {
   Text,
@@ -18,4 +19,5 @@ export {
   Button,
   SelectInput,
   Modal,
+  WheelPicker,
 }
