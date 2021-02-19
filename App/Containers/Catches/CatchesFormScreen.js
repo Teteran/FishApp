@@ -25,11 +25,11 @@ class CatchesFormScreen extends React.Component {
         },
         fish_dimension: {
           type: 'FishDimension',
-          value: 0,
+          value: '-',
         },
         fish_weight: {
           type: 'FishWeight',
-          value: 0,
+          value: '-',
         },
         catch_date: {
           type: 'generic',
@@ -144,7 +144,7 @@ class CatchesFormScreen extends React.Component {
         <View style={Helpers.fillRow}>
           <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
             {this.renderGeneralInformationPage()}
-          </Animated.View>
+          </Animated.View> 
           <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
             {this.renderDetailedInformationPage()}
           </Animated.View>

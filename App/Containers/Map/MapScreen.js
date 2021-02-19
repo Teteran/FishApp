@@ -15,7 +15,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={[Helpers.fill]}>
         <MapboxGL.MapView
-          styleURL={MapboxGL.StyleURL.SatelliteStreet}
+          styleURL={MapboxGL.StyleURL.Dark}
           attributionEnabled={false}
           compassEnabled={true}
           compassViewPosition={1}

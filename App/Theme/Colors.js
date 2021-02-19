@@ -1,24 +1,17 @@
-/**
- * This file contains the application's colors.
- *
- * Define color here instead of duplicating them throughout the components.
- * That allows to change them more easily later on.
- */
-
 export default {
   transparent: 'rgba(0,0,0,0)',
   transparentBlack: 'rgba(0,0,0,0.5)',
   transparentBlack2: 'rgba(0,0,0,0.25)',
   transparentBlack3: 'rgba(0,0,0,0.75)',
 
-  // Example colors:
   white: '#ffffff',
   grey: '#e5e5e5',
   grey2: '#bdbdbd',
   yellow: '#ff00ff',
   text: '#212529',
   text2: '#21252950',
-  primary: '#007bff',
+  backgroundColor: '#292121',
+  primary: '#7893ff',
   success: '#28a745',
   error: '#dc3545',
   red: '#df4730',

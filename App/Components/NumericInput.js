@@ -114,6 +114,7 @@ NumericInput.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   inputValidationRegex: PropTypes.instanceOf(RegExp),
   inputIcon: PropTypes.string,
+  canBeZero: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   wheelsConfig: PropTypes.arrayOf(
     PropTypes.shape({

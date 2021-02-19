@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
   render() {
     const { weatherConditions } = this.props
     return (
-      <ImageBackground source={Images.homeBackground} style={[Helpers.fillColCenter]}>
+      <ImageBackground source={Images.homeBackground} style={[Helpers.fillCenter]}>
         <View style={Style.weatherContainer}>
           {this.renderWeatherGeneralsContainer(weatherConditions)}
           {this.renderWeatherDetailsContainer(weatherConditions)}
@@ -32,10 +32,10 @@ class HomeScreen extends React.Component {
   renderWeatherGeneralsContainer = (weatherConditions) => {
     return (
       <View style={Style.weatherGeneralsContainer}>
-        <View style={Helpers.fillRowCenter}>
+        <View style={Helpers.fillCenter}>
           <MaterialCommunityIcons
             name="weather-partlycloudy"
-            color={Colors.yellow}
+            color={Colors.primary}
             size={64}
             style={[Metrics.tinyHorizontalPadding]}
           />
@@ -47,7 +47,7 @@ class HomeScreen extends React.Component {
             }}
           >
             <Text style={[Fonts.h1]}>{Math.floor(weatherConditions?.main?.temp)}</Text>
-            <Text style={[Fonts.normal, { height: 32 }]}>°C</Text>
+            <Text style={[Fonts.h1]}>°C</Text>
           </View>
         </View>
         <Text
@@ -61,7 +61,7 @@ class HomeScreen extends React.Component {
             },
           ]}
         >
-          {i18n.t('home.station', { stationName: weatherConditions?.stationName })}
+          {weatherConditions?.stationName }
         </Text>
       </View>
     )

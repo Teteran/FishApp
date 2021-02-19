@@ -15,20 +15,18 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   weatherContainer: {
-    ...Helpers.mainCenter,
     ...ApplicationStyles.shadow,
     width: Math.round(Metrics.deviceWidth * (7 / 10)),
     height: Math.round(Metrics.deviceWidth * (7 / 10)),
     backgroundColor: Colors.transparentBlack,
-    borderRadius: 1000,
+    borderRadius: 180,
   },
   weatherGeneralsContainer: {
     width: '100%',
     height: '50%',
     ...Helpers.center,
-    justifyContent: 'flex-end',
-    borderTopLeftRadius: 1000,
-    borderTopRightRadius: 1000,
+    borderTopLeftRadius: 180,
+    borderTopRightRadius: 180,
   },
   weatherDetailsContainer: {
     width: '100%',
@@ -37,8 +35,8 @@ export default StyleSheet.create({
     ...Metrics.tinyVerticalPadding,
     ...Metrics.smallHorizontalPadding,
     backgroundColor: Colors.transparentBlack,
-    borderBottomLeftRadius: 1000,
-    borderBottomRightRadius: 1000,
+    borderBottomLeftRadius: 180,
+    borderBottomRightRadius: 180,
   },
   innerWeatherContainer: {
     width: Math.round(Metrics.deviceWidth * (8 / 10)),
@@ -46,7 +44,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.yellow,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 360,
+    borderRadius: 180,
   },
   detailDivider: {
     borderBottomWidth: 0.7,

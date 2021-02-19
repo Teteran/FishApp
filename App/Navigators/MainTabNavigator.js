@@ -10,15 +10,35 @@ import CatchesFormScreen from 'App/Containers/Catches/CatchesFormScreen'
 import CatchesScreen from 'App/Containers/Catches/CatchesScreen'
 import { navigationRef } from 'App/Services/NavigationService'
 import i18n from 'App/Services/i18n'
+import { Colors } from 'App/Theme';
 
 const Tab = createBottomTabNavigator()
+
+const Stack = createNativeStackNavigator()
+
+catchesStack = () =>{
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+      name="Catches"
+      component={CatchesScreen}
+      options={{
+        title: i18n.t('navigation.catches'),
+      }}
+      />
+      <Stack.Screen name="CatchesFormScreen" component={CatchesFormScreen} />
+   </Stack.Navigator>
+  )
+}
 
 function MainTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Catches"
+      initialRouteName="HomeScreen"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: Colors.primary,
+        backgroundColor: 'red',
+        tabStyle:{ backgroundColor: Colors.backgroundColor},
         showLabel: false,
       }}
     >
@@ -46,7 +66,7 @@ function MainTabs() {
       />
       <Tab.Screen
         name="Catches"
-        component={CatchesScreen}
+        component={catchesStack}
         options={{
           title: i18n.t('navigation.catches'),
           tabBarIcon: ({ color, size }) => (
