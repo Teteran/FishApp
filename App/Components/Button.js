@@ -1,20 +1,10 @@
 import React from 'react'
-import { StyleSheet, View, TouchableNativeFeedback, TextInput as RNTextInput } from 'react-native'
+import { View, TouchableNativeFeedback } from 'react-native'
 import { PropTypes } from 'prop-types'
-import { Text, GradientBackground } from 'App/Components'
-import { ApplicationStyles, Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import DatePicker from '@react-native-community/datetimepicker'
-import moment from 'moment'
+import { Text } from 'App/Components'
+import { ApplicationStyles, Fonts, Colors } from 'App/Theme'
 export default class Button extends React.Component {
   static defaultProps = { style: {} }
-  constructor(props) {
-    super(props)
-    this.state = {
-      show: false,
-    }
-  }
-
   isButtonDisabled = () => {
     return this.props.disabled
   }
@@ -46,4 +36,3 @@ export default class Button extends React.Component {
 Button.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
-const styles = StyleSheet.create({})

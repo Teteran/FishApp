@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableNativeFeedback, TextInput as RNTextInput } from 'react-native'
+import { View, TouchableNativeFeedback, TextInput as RNTextInput, StyleSheet } from 'react-native'
 import { PropTypes } from 'prop-types'
 import { Text } from 'App/Components'
 import { Utils } from 'App/Utils'
@@ -12,7 +12,7 @@ export default class DateTimeInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      show: false,
+      showDatePicker: false,
       selectedDate: new Date(),
     }
   }
@@ -22,7 +22,7 @@ export default class DateTimeInput extends React.Component {
     return (
       <View>
         <Text style={ApplicationStyles.inputLabelText}>{this.props.label}</Text>
-        <TouchableNativeFeedback {...this.props} onPress={() => this.setState({ show: true })}>
+        <TouchableNativeFeedback {...this.props} onPress={() => this.setState({ showDatePicker: true })}>
           <View style={ApplicationStyles.inputContainer}>
             <RNTextInput
               {...this.props}
@@ -32,32 +32,38 @@ export default class DateTimeInput extends React.Component {
               style={ApplicationStyles.inputText}
               value={selectedDate}
             />
-            {this.state.show && (
+            {this.state.showDatePicker && (
               <DatePicker
                 value={new Date()}
                 is24Hour
                 mode={this.props.mode}
                 maximumDate={new Date(2020, 6, 28)}
                 onChange={(event, selectedDate) => {
-                  this.setState({ show: false, selectedDate }, () =>
+                  this.setState({ showDatePicker: false, selectedDate }, () =>
                     this.props.onChange(selectedDate)
                   )
                 }}
               />
             )}
-
+            <View style={styles.inputIconContainer}>
             <MaterialCommunityIcons
               name={this.props.mode === 'date' ? 'calendar-month' : 'clock-outline'}
-              color={Colors.error}
+              color={Colors.backgroundColor}
               size={30}
               style={ApplicationStyles.inputIcon}
             />
+            </View>
           </View>
         </TouchableNativeFeedback>
       </View>
     )
   }
 }
+const styles = StyleSheet.create({
+  inputIconContainer: {
+    position: 'relative', flex:1, backgroundColor: Colors.secondary, borderTopRightRadius: 10, borderBottomRightRadius: 10, opacity: 0.5
+  },
+})
 
 DateTimeInput.propTypes = {
   mode: PropTypes.oneOf(['date', 'time']).isRequired,

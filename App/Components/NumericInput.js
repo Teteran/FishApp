@@ -92,18 +92,26 @@ export default function NumericInput(props) {
             value={`${props.value}`}
           />
           {props.inputIcon && (
+            <View style={styles.inputIconContainer}>
             <MaterialCommunityIcons
               name={props.inputIcon}
-              color={Colors.error}
+              color={Colors.backgroundColor}
               size={30}
               style={ApplicationStyles.inputIcon}
             />
+            </View>
           )}
         </View>
       </TouchableNativeFeedback>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  inputIconContainer: {
+    position: 'relative', flex:1, backgroundColor: Colors.secondary, borderTopRightRadius: 10, borderBottomRightRadius: 10, opacity: 0.5
+  },
+})
 
 NumericInput.defaultProps = {
   inputValidationRegex: /^\d*(\,|\.)?\d*$/,

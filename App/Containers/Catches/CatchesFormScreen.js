@@ -1,4 +1,4 @@
-import { Animated, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { Colors, Helpers, Metrics } from 'App/Theme'
 import { DateTimeInput, NumericInput, Text, TextInput, Button, SelectInput } from 'App/Components'
 import i18n from 'App/Services/i18n'
@@ -15,7 +15,6 @@ const screensQuantity = 2
 class CatchesFormScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.animatedValue = new Animated.Value(0)
     this.state = {
       focusedScreenIndex: 0,
       inputs: {
@@ -86,14 +85,6 @@ class CatchesFormScreen extends React.Component {
     })
   }
 
-  animate = (animatedValue, toValue) => {
-    Animated.timing(animatedValue, {
-      toValue,
-      duration: 500,
-      useNativeDriver: true,
-    }).start()
-  }
-
   submit() {
     const { inputs } = this.state
     this.props.addNewCatch(this.mapFormInputsToObject(inputs))
@@ -108,81 +99,28 @@ class CatchesFormScreen extends React.Component {
     return null
   }
 
-  goToNextScreen = () => {
-    let currentScreenIndex = this.state.focusedScreenIndex
-    if (this.isLastScreen()) return
-    currentScreenIndex += 1
-    this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
-      this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
-    )
-  }
-
-  goToPreviousScreen = () => {
-    let currentScreenIndex = this.state.focusedScreenIndex
-    if (this.isFirstScreen()) return
-    currentScreenIndex -= 1
-    this.setState({ focusedScreenIndex: currentScreenIndex }, () =>
-      this.animate(this.animatedValue, -1 * currentScreenIndex * Metrics.deviceWidth)
-    )
-  }
-
-  isLastScreen = () => {
-    let currentScreenIndex = this.state.focusedScreenIndex
-    return currentScreenIndex >= screensQuantity - 1
-  }
-  isFirstScreen = () => {
-    let currentScreenIndex = this.state.focusedScreenIndex
-    return currentScreenIndex <= 0
-  }
-
   render() {
-    const animatedStyle = {
-      transform: [{ translateX: this.animatedValue }],
-    }
     return (
-      <View style={Helpers.fill}>
-        <View style={Helpers.fillRow}>
-          <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
+
+     <ScrollView style={[ApplicationStyles.card]}>
             {this.renderGeneralInformationPage()}
-          </Animated.View> 
-          <Animated.View style={[{ width: Metrics.deviceWidth }, animatedStyle]}>
+         
             {this.renderDetailedInformationPage()}
-          </Animated.View>
-        </View>
-        <View style={[Helpers.row, Helpers.mainSpaceAround, Metrics.verticalMargin]}>
-          <Button
-            title={i18n.t('buttons.previous')}
-            style={{ width: '30%' }}
-            disabled={this.isFirstScreen()}
-            onPress={() => {
-              this.goToPreviousScreen()
-            }}
-          />
-          {this.isLastScreen() ? (
             <Button
-              title={i18n.t('buttons.submit')}
-              style={{ width: '30%', backgroundColor: Colors.success }}
-              onPress={() => {
-                this.submit()
-              }}
-            />
-          ) : (
-            <Button
-              title={i18n.t('buttons.next')}
-              style={{ width: '30%', backgroundColor: Colors.success }}
-              onPress={() => {
-                this.goToNextScreen()
-              }}
-            />
-          )}
-        </View>
-      </View>
+                      title={i18n.t('buttons.submit')}
+                      style={{ flex: 0.5, backgroundColor: Colors.primary, }}
+                      buttonTitleStyle={{color: Colors.backgroundColor}}
+                      onPress={() => {
+                        this.submit()
+                      }}
+                    />
+</ScrollView>
     )
   }
 
   renderGeneralInformationPage = () => {
     return (
-      <ScrollView style={ApplicationStyles.card}>
+      <>
         <View>
           <SelectInput
             label={i18n.t('catches.form.labels.fish_type')}
@@ -254,12 +192,12 @@ class CatchesFormScreen extends React.Component {
             {this.renderError('catch_time')}
           </View>
         </View>
-      </ScrollView>
+        </>
     )
   }
   renderDetailedInformationPage = () => {
     return (
-      <ScrollView style={ApplicationStyles.card}>
+   <>
         <View style={[Helpers.rowCenter, Helpers.mainSpaceAround]}>
           <View style={Style.container}>
             <NumericInput
@@ -332,7 +270,7 @@ class CatchesFormScreen extends React.Component {
           }}
         />
         {this.renderError('fishing_notes')}
-      </ScrollView>
+        </>
     )
   }
 }
