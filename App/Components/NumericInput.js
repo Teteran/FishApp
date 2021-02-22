@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput as RNTextInput, TouchableNativeFeedback } from 'react-native'
+import { View, TextInput as RNTextInput, TouchableNativeFeedback, StyleSheet } from 'react-native'
 
 import { PropTypes } from 'prop-types'
 import { Text, Modal, WheelPicker } from 'App/Components'

@@ -36,10 +36,10 @@ function MainTabs() {
       tabBarOptions={{
         activeTintColor: Colors.primary,
         inactiveTintColor: Colors.secondary,
-        tabStyle:{ backgroundColor: Colors.backgroundColor, borderTopWidth: 0.185, borderColor: Colors.primary},
+        tabStyle:{ backgroundColor: Colors.backgroundColor, borderTopWidth: 0.5, borderColor: Colors.transparentPrimary},
         showLabel: false,
       }}
-      sceneContainerStyle={{backgroundColor: Colors.secondary}}
+      sceneContainerStyle={{backgroundColor: Colors.backgroundColor}}
     >
       <Tab.Screen
         name="MapScreen"

@@ -23,7 +23,6 @@ export default {
     },
     shadowOpacity: 0.43,
     shadowRadius: 9.51,
-
     elevation: 1,
   },
   floatingButton: {
@@ -66,9 +65,7 @@ export default {
     ...Metrics.tinyVerticalPadding,
     ...Metrics.tinyHorizontalPadding,
     flex: 1,
-    backgroundColor: Colors.backgroundColor,
-    opacity: 0.85,
-
+    backgroundColor: Colors.backgroundColor+'f0',
     elevation: 1,
   },
 }

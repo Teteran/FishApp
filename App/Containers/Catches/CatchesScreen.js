@@ -1,5 +1,5 @@
-import { View, FlatList, Image, TouchableNativeFeedback } from 'react-native'
-import { Fonts, Colors, Metrics, Helpers } from 'App/Theme'
+import { View, FlatList, Image, StyleSheet, Pressable } from 'react-native'
+import { Fonts, Colors, Helpers } from 'App/Theme'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import React from 'react'
 import Style from './CatchesScreenStyle'
@@ -18,18 +18,16 @@ class CatchesScreen extends React.Component {
           renderItem={({ item, index }) => this._renderListItem(item, index)}
           keyExtractor={(item) => item.id}
         />
-        <TouchableNativeFeedback
+        <Pressable
           onPress={this._onPressListItem}
-         
+          style={[ApplicationStyles.floatingButton, Helpers.center , styles.floatingButton]}
         >
-        <View  style={[ApplicationStyles.floatingButton, { backgroundColor: Colors.backgroundColor, justifyContent: 'center', alignItems: 'center', borderColor:Colors.primary, borderWidth: 0.37 }]}>
                  <MaterialCommunityIcons
             name="plus"
             color={Colors.primary}
             size={38}
           />
-          </View>
-        </TouchableNativeFeedback>
+          </Pressable>  
       </View>
     )
   }
@@ -40,9 +38,9 @@ class CatchesScreen extends React.Component {
 
   _renderListItem = (item, index) => {
     const { fish_dimension, fish_weight, fish_type, catch_date } = item
-    const margin = index % 2 ? {borderLeftWidth: 0.185} : {};
+    const margin = index % 2 ? {borderLeftWidth: 1} : {};
     return (
-      <ListItem onPress={this._onPressListItem} containerStyle={{...margin, borderBottomWidth: 0.185, borderColor: Colors.backgroundColor }}>
+      <ListItem onPress={this._onPressListItem} containerStyle={{...margin, borderBottomWidth: 1, borderColor: Colors.transparentPrimary }}>
         <Image
           source={{ uri: 'https://reactjs.org/logo-og.png' }}
           style={{ width: '100%', height: 200 }}
@@ -52,13 +50,18 @@ class CatchesScreen extends React.Component {
           <Text style={[Fonts.small, { color: Colors.secondary }]}>{Utils.formatDate(catch_date)}</Text>
         </View>
         <View style={[Helpers.rowCenter, Helpers.mainSpaceBetween]}>
-          <Text style={[Fonts.normal, { color: Colors.secondary }]}>{fish_dimension} cm</Text>
-          <Text style={[Fonts.normal, { color: Colors.secondary }]}>{fish_weight} kg</Text>
+          <Text style={[Fonts.normal, { color: Colors.secondary }]}>{fish_dimension}</Text>
+          <Text style={[Fonts.normal, { color: Colors.secondary }]}>{fish_weight}</Text>
         </View>
       </ListItem>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  floatingButton: { backgroundColor: Colors.backgroundColor, borderColor:Colors.transparentPrimary, borderWidth: 1 },
+})
+
 CatchesScreen.propTypes = {}
 
 const mapStateToProps = (state) => ({

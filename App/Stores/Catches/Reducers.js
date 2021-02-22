@@ -4,7 +4,6 @@ import { CatchesTypes } from './Actions'
 import { UtilService } from 'App/Services'
 export const addNewCatch = (state, { newCatch }) => {
   Object.assign(newCatch, { id: UtilService.create_UUID() })
-
   return {
     ...state,
     catches: [...state.catches, newCatch],

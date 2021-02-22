@@ -12,6 +12,7 @@ export default {
   text2: '#21252950',
   backgroundColor: '#292121',
   primary: '#7893ff',
+  transparentPrimary: '#7893ff3f',
   secondary: '#8e8e8f',
   success: '#28a745',
   error: '#dc3545',

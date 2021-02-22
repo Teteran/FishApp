@@ -1,11 +1,11 @@
-import { ImageBackground, View } from 'react-native'
+import { ImageBackground, View, Animated } from 'react-native'
 import { Fonts, Helpers, Images, Metrics, Colors } from 'App/Theme'
 
 import Geolocation from '@react-native-community/geolocation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import React from 'react'
 import Style from './HomeScreenStyle'
-import { Text, GradientBackground } from 'App/Components'
+import { Text, GradientBackground, CircularProgress } from 'App/Components'
 import i18n from 'App/Services/i18n'
 import WeatherActions from 'App/Stores/Weather/Actions'
 import { connect } from 'react-redux'
@@ -19,12 +19,16 @@ class HomeScreen extends React.Component {
   }
 
   render() {
+    const progress = new Animated.Value(0.4);
     const { weatherConditions } = this.props
     return (
       <ImageBackground source={Images.homeBackground} style={[Helpers.fillCenter]}>
         <View style={Style.weatherContainer}>
+        {/* <CircularProgress progress={progress} /> */}
           {this.renderWeatherGeneralsContainer(weatherConditions)}
           {this.renderWeatherDetailsContainer(weatherConditions)}
+          <Text>{`sunrise:${weatherConditions.sunrise} `}</Text>
+        <Text>{`sunset:${weatherConditions.sunset} `}</Text>
         </View>
       </ImageBackground>
     )
@@ -40,11 +44,7 @@ class HomeScreen extends React.Component {
             style={[Metrics.tinyHorizontalPadding]}
           />
           <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={Helpers.rowCenter}
           >
             <Text style={[Fonts.h1]}>{Math.floor(weatherConditions?.main?.temp)}</Text>
             <Text style={[Fonts.h1]}>°C</Text>
@@ -56,8 +56,8 @@ class HomeScreen extends React.Component {
             Metrics.horizontalPadding,
             {
               backgroundColor: Colors.transparentBlack,
-              borderTopRightRadius: 100,
-              borderTopLeftRadius: 100,
+              borderTopRightRadius: 25,
+              borderTopLeftRadius: 25,
             },
           ]}
         >

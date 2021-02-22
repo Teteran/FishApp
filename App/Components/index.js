@@ -8,6 +8,7 @@ import SelectInput from './SelectInput'
 import Button from './Button'
 import Modal from './Modal'
 import WheelPicker from './WheelPicker'
+import CircularProgress from './CircularProgress'
 
 export {
   Text,
@@ -20,4 +21,5 @@ export {
   SelectInput,
   Modal,
   WheelPicker,
+  CircularProgress
 }
